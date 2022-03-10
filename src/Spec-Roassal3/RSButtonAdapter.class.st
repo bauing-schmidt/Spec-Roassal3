@@ -10,10 +10,12 @@ RSButtonAdapter >> addModelTo: rsButton [
 
 	rsButton 
 	text: self getLabelText;
-	"adjustToChildren;"
-	color: self defaultColor;
+	build
+	"color: self defaultColor;
 	extent: 100@50;
-	@ (RSHighlightable color: self defaultColor darker)
+	@ (RSHighlightable color: self defaultColor darker)"
+	
+	
 	"self presenter contextMenu ifNotNil: [ :menu |
 		self addMenu: menu to: roassalButton ].
 

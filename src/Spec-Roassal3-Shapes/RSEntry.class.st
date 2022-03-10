@@ -1,5 +1,5 @@
 Class {
 	#name : #RSEntry,
-	#superclass : #RSComposite,
+	#superclass : #RSWidget,
 	#category : #'Spec-Roassal3-Shapes-Widget-Input'
 }

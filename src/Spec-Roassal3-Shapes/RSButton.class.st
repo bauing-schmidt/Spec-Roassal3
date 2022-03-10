@@ -1,17 +1,35 @@
 Class {
 	#name : #RSButton,
-	#superclass : #RSComposite,
+	#superclass : #RSWidget,
 	#instVars : [
 		'text'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget-Buttons'
 }
 
+{ #category : #building }
+RSButton >> build [
+	self 
+	add: self label;
+	color: self defaultColor;
+	extent: 100@50;
+	@ (RSHighlightable color: self defaultColor darker)
+]
+
 { #category : #initialization }
-RSButton >> initialize [ 
-	super initialize.
-	"self size: 50."
-	"self paint: Color gray"
+RSButton >> defaultColor [
+	^ Color gray
+]
+
+{ #category : #'as yet unclassified' }
+RSButton >> defaultColorLabel [
+
+	^ Color white
+]
+
+{ #category : #adding }
+RSButton >> label [
+	^ RSLabel new color: self defaultColorLabel; text: text
 ]
 
 { #category : #accessing }
@@ -21,7 +39,9 @@ RSButton >> text [
 ]
 
 { #category : #accessing }
-RSButton >> text: anObject [
+RSButton >> text: aString [
 
-	self add: (RSLabel new color: Color white; text: anObject)
+	text := aString
+
+	
 ]
