@@ -2,25 +2,27 @@ Class {
 	#name : #RSWindowAdapter,
 	#superclass : #RSAdapter,
 	#instVars : [
-		'contentBox',
 		'content',
-		'deferredActions'
+		'deferredActions',
+		'title',
+		'contentGroup'
 	],
 	#category : #'Spec-Roassal3-Adapter'
 }
 
 { #category : #adding }
-RSWindowAdapter >> add: roassalBox toWindow: roassalWindow [
+RSWindowAdapter >> addGroup: group toCanvas: canvas [
 
-	roassalWindow add: roassalBox
+	canvas addAll: group.
+	RSVerticalLineLayout on: group
 ]
 
 { #category : #adding }
-RSWindowAdapter >> addPresenterIn: roassalWindow withSpecLayout: aSpec [
+RSWindowAdapter >> addPresenterIn: canvas withSpecLayout: aSpec [
 	
 	"initialized := false.
 	GRunLoop defer: ["
-	self deferredAddPresenterIn: roassalWindow withSpecLayout: aSpec.
+	self deferredAddPresenterIn: canvas withSpecLayout: aSpec.
 	"initialized := true."
 	self processDeferredActions "]"
 ]
@@ -33,13 +35,13 @@ RSWindowAdapter >> contentWithSpecLayout: aSpec [
 ]
 
 { #category : #adding }
-RSWindowAdapter >> deferredAddPresenterIn: roassalWindow withSpecLayout: aSpec [
+RSWindowAdapter >> deferredAddPresenterIn: canvas withSpecLayout: aSpec [
 	"inner contents of window"
-	contentBox := RSComposite new.
-	self populateContent: contentBox spec: aSpec window: roassalWindow.
+	contentGroup := RSGroup new.
+	self populateContent: contentGroup spec: aSpec window: canvas.
 	"contentBox open."
 
-	self add: contentBox toWindow: roassalWindow
+	self addGroup: contentGroup toCanvas: canvas
 ]
 
 { #category : #'instance creation' }
@@ -52,7 +54,7 @@ RSWindowAdapter >> open [
 
 	self hasWidget ifFalse: [ ^ nil ].
 	self widgetDo: [ :w |
-			w open.
+			w openWithTitle: (title ifNil: [self presenter class name]).
 			"w present" ].
 	"self presenter presenter takeKeyboardFocus.
 	self announceOpened."
@@ -98,4 +100,10 @@ RSWindowAdapter >> processDeferredActions [
 	deferredActions ifNil: [ ^ self ].
 	deferredActions do: [ :each | each value ].
 	deferredActions := nil
+]
+
+{ #category : #accessing }
+RSWindowAdapter >> title: string [
+	title := string.
+	"self widgetDo: [ :w | w title: (string ifNotNil: [ :theString | theString localizedForPresenter: self presenter]) ]"
 ]
