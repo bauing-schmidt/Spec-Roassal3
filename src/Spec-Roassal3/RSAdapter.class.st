@@ -25,7 +25,8 @@ RSAdapter class >> isAbstract [
 ]
 
 { #category : #adding }
-RSAdapter >> addModelTo: gtkWidget [
+RSAdapter >> addModelTo: rsWidget [
+
 ]
 
 { #category : #factory }

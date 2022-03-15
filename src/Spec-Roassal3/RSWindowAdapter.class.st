@@ -45,11 +45,6 @@ RSWindowAdapter >> deferredAddPresenterIn: canvas withSpecLayout: aSpec [
 ]
 
 { #category : #'instance creation' }
-RSWindowAdapter >> newWidget [ 
-	^ RSCanvas new
-]
-
-{ #category : #'instance creation' }
 RSWindowAdapter >> open [
 
 	self hasWidget ifFalse: [ ^ nil ].
@@ -106,4 +101,9 @@ RSWindowAdapter >> processDeferredActions [
 RSWindowAdapter >> title: string [
 	title := string.
 	"self widgetDo: [ :w | w title: (string ifNotNil: [ :theString | theString localizedForPresenter: self presenter]) ]"
+]
+
+{ #category : #'instance creation' }
+RSWindowAdapter >> widgetClass [
+	^ RSCanvas
 ]

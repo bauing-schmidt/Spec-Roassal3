@@ -6,10 +6,10 @@ Class {
 
 { #category : #adding }
 RSLabelAdapter >> addModelTo: roassalWidget [
-	
 	super addModelTo: roassalWidget.
-	
-	roassalWidget text: self getText.
+
+	roassalWidget text: self getText;
+	build
 	"self presenter whenLabelChangedDo: [
 		self innerWidgetDo: [ :w | w label: self getText ] ]."
 ]
@@ -27,7 +27,6 @@ RSLabelAdapter >> label [
 ]
 
 { #category : #'instance creation' }
-RSLabelAdapter >> newWidget [
-
-	^ RSLabel new
+RSLabelAdapter >> widgetClass [ 
+	^ RSLabelWidget 
 ]
