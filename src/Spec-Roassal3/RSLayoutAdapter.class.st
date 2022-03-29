@@ -26,8 +26,21 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 ]
 
 { #category : #adding }
+RSLayoutAdapter >> addModelTo: aWidget [
+	super addModelTo: aWidget.
+	RSAdapter widgetData nextOrNil.
+	
+]
+
+{ #category : #adding }
 RSLayoutAdapter >> addWidgetAlignment: constraints to: rsWidget [
 	
+]
+
+{ #category : #private }
+RSLayoutAdapter >> applyLayout: aLayout [
+
+	self subclassResponsibility
 ]
 
 { #category : #adding }
@@ -44,6 +57,17 @@ RSLayoutAdapter >> build [
 RSLayoutAdapter >> buildWithSelector: aSelector [
 
 	^ self build
+]
+
+{ #category : #private }
+RSLayoutAdapter >> deferredLayout: aLayout [
+
+	layout := aLayout.
+	self applyLayout: aLayout.
+	"self applyVisibility: widget.
+	self applyStyle: widget.
+	self addKeyBindingsTo: widget."
+	self addEventsTo: widget
 ]
 
 { #category : #accessing }

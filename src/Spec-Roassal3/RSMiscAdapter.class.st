@@ -7,6 +7,14 @@ Class {
 	#category : #'Spec-Roassal3-Adapter'
 }
 
+{ #category : #adding }
+RSMiscAdapter >> addModelTo: rsWidget [
+	| assoc |
+	super addModelTo: rsWidget.
+	assoc := RSAdapter widgetData nextOrNil.
+	assoc ifNotNil: [ rsWidget translateBy: assoc key origin ]
+]
+
 { #category : #accessing }
 RSMiscAdapter >> innerWidget [
 
@@ -17,22 +25,4 @@ RSMiscAdapter >> innerWidget [
 RSMiscAdapter >> widget: aWidget [
 
 	widget := aWidget
-]
-
-{ #category : #building }
-RSMiscAdapter >> wrapWidget: aWidget [
-	| eventBox |
-
-	self presenter hasEventHandler 
-		ifFalse: [ ^ super wrapWidget: aWidget ].
-		
-	innerWidget := aWidget.
-	eventBox := RSCanvas new.
-	"eventBox := GtkEventBox newWidget: innerWidget.
-	eventBox show.
-	eventBox events: innerWidget events.
-	innerWidget callbacks 
-		do: [ :each | each connectTo: eventBox ]."
-		
-	^ eventBox
 ]

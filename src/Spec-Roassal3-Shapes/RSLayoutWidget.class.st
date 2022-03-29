@@ -10,6 +10,11 @@ RSLayoutWidget >> addChild: rsWidget given: expand fill: fill padding: padding [
 	elements add: rsWidget
 ]
 
+{ #category : #accessing }
+RSLayoutWidget >> attach: child at: aPoint span: spanPoint [
+	self add: child
+]
+
 { #category : #building }
 RSLayoutWidget >> build [
 	lineLayoutClass ifNil: [ lineLayoutClass := self defaultLineLayoutClass ].
@@ -18,9 +23,9 @@ RSLayoutWidget >> build [
 	"self padding: 1"
 ]
 
-{ #category : #'as yet unclassified' }
-RSLayoutWidget >> defaultLineLayoutClass [
-	^ RSHorizontalLineLayout 
+{ #category : #private }
+RSLayoutWidget >> homogeneous: integer [
+	
 ]
 
 { #category : #accessing }
@@ -30,4 +35,9 @@ RSLayoutWidget >> packStart: child expand: expand fill: fill padding: padding [
 	self addChild: child given: expand fill: fill padding: padding.
 	
 	^ child
+]
+
+{ #category : #api }
+RSLayoutWidget >> spacing: integer [
+	
 ]

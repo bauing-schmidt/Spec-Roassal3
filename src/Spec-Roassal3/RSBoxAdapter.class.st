@@ -34,6 +34,20 @@ RSBoxAdapter >> addWidgetAlignment: constraints to: rsWidget [
 		ifNotNil: [ :align | self halt.rsWidget hAlign: align asGtkAlign ]
 ]
 
+{ #category : #private }
+RSBoxAdapter >> applyLayout: aLayout [
+
+	"build of widget was differed up to here (to know what is the direction)"
+	"widget := aLayout direction newWidgetOn: self."
+	widget := RSLayoutWidget new.
+	"self connectToEvents: aLayout. "
+
+	widget 
+		homogeneous: aLayout isHomogeneous;
+		spacing: aLayout spacing;
+		borderWidth: aLayout borderWidth
+]
+
 { #category : #adding }
 RSBoxAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
 	| childWidget |

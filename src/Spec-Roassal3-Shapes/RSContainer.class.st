@@ -8,19 +8,12 @@ Class {
 	#category : #'Spec-Roassal3-Shapes-Widget-Container'
 }
 
-{ #category : #accessing }
-RSContainer >> direction: layoutDirection [
-
-	layoutDirection isVertical 
-		ifTrue: [ lineLayoutClass := RSVerticalLineLayout ] 
-		ifFalse: [ ^ self ].
-	layoutDirection isHorizontal 
-		ifTrue: [ lineLayoutClass := RSHorizontalLineLayout ]
+{ #category : #adding }
+RSContainer >> addOn: canvas [
+	self nodes do: [ :e | e addOn: canvas ]
 ]
 
-{ #category : #initialization }
-RSContainer >> initialize [ 
-	super initialize.
-	
-	elements := RSGroup new
+{ #category : #accessing }
+RSContainer >> borderWidth: integer [
+	self border: (RSBorder new width: integer; yourself)
 ]
