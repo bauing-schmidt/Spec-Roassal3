@@ -1,6 +1,9 @@
 Class {
 	#name : #RSAdapter,
 	#superclass : #SpAbstractAdapter,
+	#classInstVars : [
+		'widgetData'
+	],
 	#category : #'Spec-Roassal3-Adapter'
 }
 
@@ -24,9 +27,25 @@ RSAdapter class >> isAbstract [
 	^ self = RSAdapter 
 ]
 
+{ #category : #initialization }
+RSAdapter class >> resetWidgetData [
+	widgetData := nil
+]
+
+{ #category : #accessing }
+RSAdapter class >> widgetData [ 
+	^ widgetData
+]
+
+{ #category : #accessing }
+RSAdapter class >> widgetData: object [
+	widgetData ifNil: [ 
+		widgetData := object ]
+]
+
 { #category : #adding }
 RSAdapter >> addModelTo: rsWidget [
-
+	
 ]
 
 { #category : #factory }

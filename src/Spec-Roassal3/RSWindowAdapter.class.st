@@ -12,9 +12,9 @@ Class {
 
 { #category : #adding }
 RSWindowAdapter >> addGroup: group toCanvas: canvas [
-
-	canvas addAll: group.
-	RSVerticalLineLayout on: group
+	"group first nodes do: [ :e | canvas addFixedShape: e ]."
+	group do: [:e | e addOn: canvas ].
+	"RSVerticalLineLayout on: group"
 ]
 
 { #category : #adding }
@@ -36,6 +36,15 @@ RSWindowAdapter >> contentWithSpecLayout: aSpec [
 
 { #category : #adding }
 RSWindowAdapter >> deferredAddPresenterIn: canvas withSpecLayout: aSpec [
+	"add window properties"
+	self presenter initialExtent
+		ifNotNil: [ :extent |
+			canvas extent: extent ].
+	self presenter initialPosition
+		ifNotNil: [ :position | self halt. canvas moveTo: position ].
+	"canvas decorated: self presenter hasDecorations."
+	"self subscribeDecorations."
+	
 	"inner contents of window"
 	contentGroup := RSGroup new.
 	self populateContent: contentGroup spec: aSpec window: canvas.
@@ -55,8 +64,20 @@ RSWindowAdapter >> open [
 	self announceOpened."
 ]
 
+{ #category : #'instance creation' }
+RSWindowAdapter >> openWithDeferredAction: aBlock [
+
+	self hasWidget ifFalse: [ ^ nil ].
+	self widgetDo: [ :w |
+			w openWithTitle: (title ifNil: [self presenter class name]).
+			"w present" ].
+	"self presenter presenter takeKeyboardFocus.
+	self announceOpened."
+	aBlock value
+]
+
 { #category : #'private building' }
-RSWindowAdapter >> populateContent: roassalBox spec: aSpec window: roassalWindow [
+RSWindowAdapter >> populateContent: group spec: aSpec window: roassalWindow [
 
 	"menu bar"
 	"self model hasMenu ifTrue: [ 
@@ -79,7 +100,7 @@ RSWindowAdapter >> populateContent: roassalBox spec: aSpec window: roassalWindow
 		fill: false
 		padding: 0."
 	"contents"
-	roassalBox add: (self contentWithSpecLayout: aSpec).
+	group add: (self contentWithSpecLayout: aSpec).
 	"status bar"
 	"self model hasStatusBar ifTrue: [ 
 		roassalBox 
@@ -105,5 +126,5 @@ RSWindowAdapter >> title: string [
 
 { #category : #'instance creation' }
 RSWindowAdapter >> widgetClass [
-	^ RSCanvas
+	^ RSWindow 
 ]
