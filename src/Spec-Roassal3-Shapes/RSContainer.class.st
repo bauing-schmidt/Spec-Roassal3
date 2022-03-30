@@ -1,10 +1,6 @@
 Class {
 	#name : #RSContainer,
 	#superclass : #RSWidget,
-	#instVars : [
-		'elements',
-		'lineLayoutClass'
-	],
 	#category : #'Spec-Roassal3-Shapes-Widget-Container'
 }
 

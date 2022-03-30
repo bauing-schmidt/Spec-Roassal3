@@ -77,7 +77,7 @@ RSLayoutAdapter >> layout [
 ]
 
 { #category : #accessing }
-RSLayoutAdapter >> layout: anObject [
+RSLayoutAdapter >> layout: aLayout [
 
-	layout := anObject
+	self deferredLayout: aLayout 
 ]

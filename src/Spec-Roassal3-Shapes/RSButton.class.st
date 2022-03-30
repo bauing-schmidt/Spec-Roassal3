@@ -12,7 +12,9 @@ RSButton >> build [
 	self 
 	add: self label;
 	color: self defaultColor;
-	extent: 100@50;
+	extent: self extent;
+	translateBy: self extent / 2;
+	border: (RSBorder new width: 0.5; color: Color black);
 	@ (RSHighlightable color: self defaultColor darker)
 ]
 

@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 RSLayoutWidget >> addChild: rsWidget given: expand fill: fill padding: padding [
 
-	elements add: rsWidget
+	self add: rsWidget
 ]
 
 { #category : #accessing }
@@ -17,9 +17,9 @@ RSLayoutWidget >> attach: child at: aPoint span: spanPoint [
 
 { #category : #building }
 RSLayoutWidget >> build [
-	lineLayoutClass ifNil: [ lineLayoutClass := self defaultLineLayoutClass ].
-	lineLayoutClass on: elements.
-	self shapes: elements.
+	"lineLayout ifNil: [ lineLayout := self defaultLineLayout ].
+	lineLayout on: elements."
+	"self shapes: elements."
 	"self padding: 1"
 ]
 

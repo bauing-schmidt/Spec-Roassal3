@@ -21,7 +21,7 @@ RSCheckButton >> build [
 	add: self label.
 	RSHorizontalLineLayout new gapSize: 3; on: shapes.
 	self addAll: shapes.
-	self padding: 1
+	"self padding: 1"
 ]
 
 { #category : #accessing }

@@ -1,6 +1,6 @@
 Class {
 	#name : #RSBaseButtonAdapter,
-	#superclass : #RSAdapter,
+	#superclass : #RSGeneralAdapter,
 	#category : #'Spec-Roassal3-Adapter'
 }
 

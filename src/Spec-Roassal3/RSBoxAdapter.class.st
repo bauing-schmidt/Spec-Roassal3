@@ -27,7 +27,7 @@ RSBoxAdapter >> addModelTo: rsLayout [
 
 { #category : #adding }
 RSBoxAdapter >> addWidgetAlignment: constraints to: rsWidget [
-	rsWidget direction: layout direction.
+	"rsWidget direction: layout direction."
 	layout vAlign
 		ifNotNil: [ :align | self halt. rsWidget vAlign: align asGtkAlign ].
  	layout hAlign 
@@ -52,7 +52,7 @@ RSBoxAdapter >> applyLayout: aLayout [
 RSBoxAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
 	| childWidget |
 	childWidget := aPresenter buildWithSelector: constraints spec.
-	self addConstraints: constraints toChild: childWidget.
+	"self addConstraints: constraints toChild: childWidget."
 	constraints isPlacedAtStart
 		ifTrue: [ 
 			rsWidget
