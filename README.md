@@ -11,3 +11,17 @@
  ignoreImage;
  load
 ```
+
+### Example
+```Smalltalk
+gtkExample := (SpDemoStandaloneFormPresenter on: SpDemoFormModel new)
+application: (SpApplication new useBackend: #Gtk).
+
+roassalExample := (SpDemoStandaloneFormPresenter on: SpDemoFormModel new)
+application: (SpApplication new useBackend: #Roassal).
+
+RSLayoutConfiguration new 
+	base: gtkExample; 
+	adjust: roassalExample; 
+	open.
+ ```
