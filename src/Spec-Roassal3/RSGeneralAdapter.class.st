@@ -8,7 +8,10 @@ Class {
 RSGeneralAdapter >> addModelTo: rsWidget [
 	| assoc |
 	super addModelTo: rsWidget.
-	assoc := RSAdapter widgetData nextOrNil.
-	assoc ifNotNil: [ rsWidget extent: assoc value.
-		rsWidget translateBy: assoc key origin ]
+	customLocation ifTrue: [
+		assoc := RSAdapter widgetData nextOrNil.
+		assoc ifNotNil: [ rsWidget extent: assoc value.
+		rsWidget translateBy: assoc key origin ] 
+	].
+	rsWidget customLocation: customLocation
 ]

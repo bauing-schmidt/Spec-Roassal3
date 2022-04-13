@@ -29,5 +29,5 @@ RSLayoutConfiguration >> open [
 	RSAdapter resetWidgetData.
 	RSAdapter widgetData: visitor data.
 	toConfigure open.
-	"RSAdapter resetWidgetData"
+	RSAdapter resetWidgetData
 ]

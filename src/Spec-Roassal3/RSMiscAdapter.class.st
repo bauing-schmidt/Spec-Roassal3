@@ -11,8 +11,11 @@ Class {
 RSMiscAdapter >> addModelTo: rsWidget [
 	| assoc |
 	super addModelTo: rsWidget.
-	assoc := RSAdapter widgetData nextOrNil.
-	assoc ifNotNil: [ rsWidget translateBy: assoc key origin ]
+	customLocation ifTrue: [ 
+		assoc := RSAdapter widgetData nextOrNil.
+		assoc ifNotNil: [ rsWidget translateBy: assoc key origin ] 
+	].
+	rsWidget customLocation: customLocation.
 ]
 
 { #category : #accessing }

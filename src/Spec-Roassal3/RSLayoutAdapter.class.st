@@ -9,7 +9,9 @@ Class {
 
 { #category : #building }
 RSLayoutAdapter >> adapterWasBuilt [ 
-	self widget build
+	self widget 
+		customLocation: customLocation;
+	 	build
 ]
 
 { #category : #adding }
@@ -28,8 +30,8 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 { #category : #adding }
 RSLayoutAdapter >> addModelTo: aWidget [
 	super addModelTo: aWidget.
-	RSAdapter widgetData nextOrNil.
-	
+	customLocation ifTrue: [ RSAdapter widgetData nextOrNil ].
+	aWidget customLocation: customLocation.
 ]
 
 { #category : #adding }

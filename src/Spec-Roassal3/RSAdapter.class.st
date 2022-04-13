@@ -1,6 +1,9 @@
 Class {
 	#name : #RSAdapter,
 	#superclass : #SpAbstractAdapter,
+	#instVars : [
+		'customLocation'
+	],
 	#classInstVars : [
 		'widgetData'
 	],
@@ -45,7 +48,10 @@ RSAdapter class >> widgetData: object [
 
 { #category : #adding }
 RSAdapter >> addModelTo: rsWidget [
-	
+	| q |
+	q := RSAdapter widgetData.
+	(q isNil or: [ q isEmpty]) ifFalse: [ 
+		customLocation := true ]
 ]
 
 { #category : #factory }
@@ -64,6 +70,12 @@ RSAdapter >> buildWidget [
 RSAdapter >> hasWidget [
 
 	^ widget notNil
+]
+
+{ #category : #initialization }
+RSAdapter >> initialize [ 
+	super initialize.
+	customLocation := false
 ]
 
 { #category : #'instance creation' }

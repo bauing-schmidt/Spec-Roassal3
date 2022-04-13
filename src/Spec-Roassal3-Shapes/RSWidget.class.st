@@ -2,7 +2,8 @@ Class {
 	#name : #RSWidget,
 	#superclass : #RSComposite,
 	#instVars : [
-		'data'
+		'data',
+		'customLocation'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget'
 }
@@ -18,6 +19,18 @@ RSWidget >> build [
 ]
 
 { #category : #accessing }
+RSWidget >> customLocation [
+
+	^ customLocation
+]
+
+{ #category : #accessing }
+RSWidget >> customLocation: anObject [
+
+	customLocation := anObject
+]
+
+{ #category : #accessing }
 RSWidget >> data [
 
 	^ data
@@ -29,9 +42,15 @@ RSWidget >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #initialization }
+RSWidget >> initialize [ 
+	super initialize.
+	customLocation := false
+]
+
 { #category : #geometry }
 RSWidget >> preferredSizeMinimum [
-	^ GtkWidget new preferredSizeMinimum 
+	^ GtkWidget new preferredSizeMinimum
 ]
 
 { #category : #geometry }

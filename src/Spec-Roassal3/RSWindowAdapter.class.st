@@ -13,8 +13,10 @@ Class {
 { #category : #adding }
 RSWindowAdapter >> addGroup: group toCanvas: canvas [
 	"group first nodes do: [ :e | canvas addFixedShape: e ]."
-	group do: [:e | e addOn: canvas ].
-	"RSVerticalLineLayout on: group"
+	customLocation 
+		ifTrue: [ group do: [:e | e addOn: canvas ] ]
+		ifFalse: [ RSVerticalLineLayout on: group.
+			canvas addAll: group ]
 ]
 
 { #category : #adding }

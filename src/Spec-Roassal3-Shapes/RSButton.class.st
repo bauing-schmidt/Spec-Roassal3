@@ -14,8 +14,8 @@ RSButton >> build [
 	color: self defaultColor;
 	extent: self extent;
 	translateBy: self extent / 2;
-	border: (RSBorder new width: 0.5; color: Color black);
-	@ (RSHighlightable color: self defaultColor darker)
+	border: (RSBorder new width: 0.5; color: Color black)";
+	@ (RSHighlightable color: self defaultColor darker)"
 ]
 
 { #category : #initialization }

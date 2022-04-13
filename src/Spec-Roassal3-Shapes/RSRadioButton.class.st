@@ -6,12 +6,15 @@ Class {
 
 { #category : #building }
 RSRadioButton >> build [ 
-	| shapes |
-	shapes := RSGroup new.
-	shapes add: self radioButton;
+	| g |
+	g := RSGroup new.
+	g add: self radioButton;
 	add: self label.
-	RSHorizontalLineLayout new gapSize: 3; on: shapes.
-	self addAll: shapes
+	RSHorizontalLineLayout new gapSize: 3; on: g.
+	customLocation 
+		ifFalse: [ self padding: 1.
+			self shapes: g ]
+		ifTrue: [ self addAll: g ].
 ]
 
 { #category : #'instance creation' }

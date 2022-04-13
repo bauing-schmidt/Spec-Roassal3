@@ -38,8 +38,8 @@ RSBoxAdapter >> addWidgetAlignment: constraints to: rsWidget [
 RSBoxAdapter >> applyLayout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
-	"widget := aLayout direction newWidgetOn: self."
-	widget := RSLayoutWidget new.
+	widget := RSBoxWidget new.
+	widget direction: aLayout direction. 
 	"self connectToEvents: aLayout. "
 
 	widget 
@@ -73,5 +73,5 @@ RSBoxAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
 { #category : #building }
 RSBoxAdapter >> widgetClass [
 
-	^ RSLayoutWidget
+	^ RSBoxWidget
 ]
