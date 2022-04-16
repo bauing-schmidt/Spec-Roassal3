@@ -20,24 +20,23 @@ RSBoxWidget >> build [
 		ifTrue: [ self addAll: elements ] 
 		ifFalse: [ 
 			lineLayout ifNil: [ lineLayout := self defaultLineLayout ].
-			lineLayout gapSize: 10;
-			on: elements.
+			lineLayout on: elements.
 			self shapes: elements.
 		 ]
 ]
 
 { #category : #'as yet unclassified' }
 RSBoxWidget >> defaultLineLayout [
-	^ RSHorizontalLineLayout new
+	^ RSHorizontalLineLayout new horizontalGap: 10; yourself
 ]
 
 { #category : #accessing }
 RSBoxWidget >> direction: specLayoutDirection [
 	self assert: specLayoutDirection class superclass = SpLayoutDirection.
 	specLayoutDirection isVertical 
-		ifTrue: [ lineLayout := RSVerticalLineLayout new ]
+		ifTrue: [ lineLayout := RSVerticalLineLayout new verticalGap: 10; yourself ]
 		ifFalse: [ specLayoutDirection isHorizontal 
-				ifTrue: [ lineLayout := RSHorizontalLineLayout new ] ]
+				ifTrue: [ lineLayout := RSHorizontalLineLayout new horizontalGap: 10; yourself ] ]
 ]
 
 { #category : #private }

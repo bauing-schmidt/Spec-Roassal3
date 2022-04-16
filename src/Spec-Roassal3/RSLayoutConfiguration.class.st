@@ -25,7 +25,7 @@ RSLayoutConfiguration >> open [
 	self assert: toConfigure isNotNil.
 	visitor := RSCollectorVisitor new.
 	base open.
-	base adapter ifNotNil: [ base adapter ifNotNil: [ base adapter widget accept: visitor ] ].
+	base adapter ifNotNil: [ base adapter widget ifNotNil: [ base adapter widget accept: visitor ] ].
 	RSAdapter resetWidgetData.
 	RSAdapter widgetData: visitor data.
 	toConfigure open.
