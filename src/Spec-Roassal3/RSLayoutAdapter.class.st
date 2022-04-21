@@ -55,6 +55,11 @@ RSLayoutAdapter >> build [
 	^ self widget
 ]
 
+{ #category : #factory }
+RSLayoutAdapter >> buildWidget [ 
+	^ nil
+]
+
 { #category : #building }
 RSLayoutAdapter >> buildWithSelector: aSelector [
 

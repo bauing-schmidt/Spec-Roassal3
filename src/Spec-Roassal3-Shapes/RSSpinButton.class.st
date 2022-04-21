@@ -7,7 +7,7 @@ Class {
 { #category : #building }
 RSSpinButton >> build [ 
 	| group input addIcon lineLayout |
-	input := self input.
+	input := RSEntry new text: text; placeholder: placeholder; build.
 	addIcon := RSBitmap new form: (self iconNamed: #remotesManagerAddRemote).
 	lineLayout := RSHorizontalLineLayout new.
 	group := RSGroup new 
