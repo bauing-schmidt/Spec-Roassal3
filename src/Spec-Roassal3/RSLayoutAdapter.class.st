@@ -57,7 +57,8 @@ RSLayoutAdapter >> build [
 
 { #category : #factory }
 RSLayoutAdapter >> buildWidget [ 
-	^ nil
+	"^ nil"
+	^ super buildWidget 
 ]
 
 { #category : #building }

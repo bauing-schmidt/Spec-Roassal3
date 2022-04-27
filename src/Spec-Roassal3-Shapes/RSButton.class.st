@@ -12,7 +12,7 @@ RSButton >> build [
 	self 
 	add: self label;
 	color: self defaultColor;
-	extent: self extent;
+	"extent: self extent;"
 	translateBy: self extent / 2;
 	border: (RSBorder new width: 0.5; color: Color black)";
 	@ (RSHighlightable color: self defaultColor darker)"
@@ -32,6 +32,11 @@ RSButton >> defaultColorLabel [
 { #category : #adding }
 RSButton >> label [
 	^ RSLabel new color: self defaultColorLabel; text: text
+]
+
+{ #category : #geometry }
+RSButton >> preferredSizeMinimum [ 
+	^ 198 @ 34
 ]
 
 { #category : #accessing }

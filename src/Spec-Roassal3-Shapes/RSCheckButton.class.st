@@ -56,3 +56,8 @@ RSCheckButton >> initialize [
 RSCheckButton >> isActive [ 
 	^ active
 ]
+
+{ #category : #geometry }
+RSCheckButton >> preferredSizeMinimum [ 	
+	^ 175@21
+]

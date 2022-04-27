@@ -63,3 +63,8 @@ RSSlider >> ellipse [
 RSSlider >> orientation: lineOrientation [
 	orientation := lineOrientation 
 ]
+
+{ #category : #geometry }
+RSSlider >> preferredSizeMinimum [ 
+	^ 175@34
+]

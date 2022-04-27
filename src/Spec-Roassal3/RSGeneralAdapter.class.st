@@ -12,6 +12,6 @@ RSGeneralAdapter >> addModelTo: rsWidget [
 		assoc := RSAdapter widgetData nextOrNil.
 		assoc ifNotNil: [ rsWidget extent: assoc value.
 		rsWidget translateBy: assoc key origin ] 
-	].
+	] ifFalse: [ rsWidget extent: rsWidget preferredSizeMinimum ].
 	rsWidget customLocation: customLocation
 ]

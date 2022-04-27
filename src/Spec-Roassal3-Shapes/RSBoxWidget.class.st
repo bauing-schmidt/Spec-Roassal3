@@ -21,7 +21,7 @@ RSBoxWidget >> build [
 		ifFalse: [ 
 			lineLayout ifNil: [ lineLayout := self defaultLineLayout ].
 			lineLayout on: elements.
-			self shapes: elements.
+			self shapes: elements
 		 ]
 ]
 

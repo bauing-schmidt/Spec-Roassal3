@@ -20,7 +20,7 @@ RSEntry >> build [
 	self 
 	add: self label;
 	color: Color white;
-	extent: self extent;
+	"extent: self extent;"
 	translateBy: self extent / 2;
 	withBorder
 ]
@@ -73,6 +73,11 @@ RSEntry >> label [
 RSEntry >> placeholder: string [
 	self assert: string isString.
 	placeholder := string
+]
+
+{ #category : #geometry }
+RSEntry >> preferredSizeMinimum [ 
+	^ 175@34
 ]
 
 { #category : #accessing }

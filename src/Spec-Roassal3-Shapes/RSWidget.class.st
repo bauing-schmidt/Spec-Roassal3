@@ -50,7 +50,7 @@ RSWidget >> initialize [
 
 { #category : #geometry }
 RSWidget >> preferredSizeMinimum [
-	^ GtkWidget new preferredSizeMinimum
+	^ 0@0
 ]
 
 { #category : #geometry }

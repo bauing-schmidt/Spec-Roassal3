@@ -17,8 +17,10 @@ RSGridWidget >> build [
 	customLocation
 		ifTrue: [ self addAll: elements ] 
 		ifFalse: [ 
-			RSGridLayout on: elements.
-			self shapes: elements ]
+			RSGridLayout new lineItemsCount: 2; 
+			on: elements.
+			self addAll: elements.
+			self padding: 1 ]
 	"self padding: 1"
 ]
 

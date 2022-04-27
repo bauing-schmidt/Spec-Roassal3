@@ -17,6 +17,11 @@ RSRadioButton >> build [
 		ifTrue: [ self addAll: g ].
 ]
 
+{ #category : #geometry }
+RSRadioButton >> preferredSizeMinimum [ 
+	^ 81@22
+]
+
 { #category : #'instance creation' }
 RSRadioButton >> radioButton [
 	| block cb icon |
