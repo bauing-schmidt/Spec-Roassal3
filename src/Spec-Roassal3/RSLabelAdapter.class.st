@@ -28,5 +28,5 @@ RSLabelAdapter >> label [
 
 { #category : #'instance creation' }
 RSLabelAdapter >> widgetClass [ 
-	^ RSLabelWidget 
+	^ RSLabelWidget
 ]
