@@ -13,9 +13,10 @@ BaselineOfSpecRoassal3 >> baseline: spec [
 		spec baseline: 'Roassal3' 
 			with: [ spec repository: 'github://ObjectProfile/Roassal3' ].
 		spec baseline: 'NeoJSON' 
-			with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]..
+			with: [ spec repository: 'github://svenvc/NeoJSON/repository' ].
 		spec 
 			package: 'Spec-Roassal3-Shapes' with: [ spec requires: #( 'Roassal3' ) ];
-			package: 'Spec-Roassal3' with: [ spec requires: #( 'SpecGtk' 'Spec-Roassal3-Shapes' 'NeoJSON' ) ]
+			package: 'Spec-Roassal3' with: [ spec requires: #( 'SpecGtk' 'Spec-Roassal3-Shapes' 'NeoJSON' ) ];
+			package: 'Spec-Roassal3-Examples' with: [ spec requires: #( 'SpecGtk' ) ]
 	]
 ]

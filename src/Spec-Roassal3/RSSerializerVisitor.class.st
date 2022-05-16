@@ -14,6 +14,12 @@ RSSerializerVisitor >> defaultDataToSerialize [
 		at: Rectangle put: [ :mapping | 
 						(mapping mapInstVar: #origin) valueSchema: Point.
 						(mapping mapInstVar: #corner) valueSchema: Point ];
+		"at: Color put: [ :mapping | 
+			mapping  ];
+		at: GdkRGBA put: [ :mapping | 
+			(mapping mapAccessor: #asColor) valueSchema: Color ];
+		at: GtkStyleContext put: [ :mapping | 
+			(mapping mapAccessor: #getRGBAColor) valueSchema: GdkRGBA ]  ;"
 		yourself
 ]
 
@@ -56,7 +62,6 @@ RSSerializerVisitor >> visitWidget: widget [
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#allocation #size #className))
-						"(mapping mapInstVar: #color) valueSchema: Color" ].
+						(mapping mapAccessors: #(#allocation #size #className #styleContext)) ].
 	mappingDictionary := dict
 ]

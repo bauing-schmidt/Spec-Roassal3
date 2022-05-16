@@ -1,12 +1,12 @@
 Class {
 	#name : #RSFrameAdapter,
-	#superclass : #RSAdapter,
+	#superclass : #RSGeneralAdapter,
 	#category : #'Spec-Roassal3-Adapter'
 }
 
 { #category : #adding }
 RSFrameAdapter >> addModelTo: rsFrame [
-	
+	super addModelTo: rsFrame.
 	rsFrame 
 		label: self presenter label;
 		addWidget: self presenterWidget;

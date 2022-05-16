@@ -6,7 +6,8 @@ Class {
 
 { #category : #adding }
 RSContainer >> addOn: canvas [
-	self nodes do: [ :e | e addOn: canvas ]
+	super addOn: canvas
+	"self nodes do: [ :e | e addOn: canvas ]"
 ]
 
 { #category : #accessing }

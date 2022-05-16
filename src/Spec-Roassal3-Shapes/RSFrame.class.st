@@ -12,6 +12,11 @@ RSFrame class >> newLabel: string [
 	^ self new label: string
 ]
 
+{ #category : #adding }
+RSFrame >> addOn: canvas [
+	super addOn: canvas 
+]
+
 { #category : #building }
 RSFrame >> build [
 	| col |
@@ -20,12 +25,20 @@ RSFrame >> build [
 		labelWidget build.
 		col add: labelWidget ].
 	col addAll: list.
-	RSVerticalLineLayout on: col.
-	self shapes: col;
-		extent: 100@50;
+	customLocation 
+		ifTrue: [ self addAll: col ]
+		ifFalse: [ 
+			RSVerticalLineLayout on: col.
+			self shapes: col ].
+	"self adjustToChildren."
+	self withBorder.
+	"self padding: 1."
+	
+	"self translateTo: 0@0."
+	"self translateBy: self extent/8;"
+		"extent: 100@50;"
 		"adjustToChildren;"
-		withBorder";
-		padding: 1"
+	
 		
 ]
 
