@@ -48,10 +48,7 @@ RSAdapter class >> widgetData: object [
 
 { #category : #adding }
 RSAdapter >> addModelTo: rsWidget [
-	| q |
-	q := RSAdapter widgetData.
-	(q isNil or: [ q isEmpty]) ifFalse: [ 
-		customLocation := true ]
+	customLocation := RSSingletonData hasReader
 ]
 
 { #category : #factory }

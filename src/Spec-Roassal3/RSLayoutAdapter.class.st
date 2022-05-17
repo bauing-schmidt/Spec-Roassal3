@@ -30,7 +30,11 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 { #category : #adding }
 RSLayoutAdapter >> addModelTo: aWidget [
 	super addModelTo: aWidget.
-	customLocation ifTrue: [ RSAdapter widgetData nextOrNil ].
+	"customLocation ifTrue: [ RSAdapter widgetData nextOrNil ]."
+	customLocation ifTrue: [ | reader info |
+		reader := RSSingletonData reader.
+		info := reader getMapping.
+		 ].
 	aWidget customLocation: customLocation.
 ]
 

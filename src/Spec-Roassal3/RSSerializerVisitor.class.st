@@ -62,6 +62,6 @@ RSSerializerVisitor >> visitWidget: widget [
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#allocation #size #className #styleContext)) ].
+						(mapping mapAccessors: #(#allocation #size #className)) ].
 	mappingDictionary := dict
 ]
