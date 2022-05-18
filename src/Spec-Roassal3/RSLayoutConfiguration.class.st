@@ -21,18 +21,23 @@ RSLayoutConfiguration >> base: gtkPresenter [
 ]
 
 { #category : #'instance creation' }
-RSLayoutConfiguration >> mapJsonToDict [
+RSLayoutConfiguration >> deserialize [
 	^ (NeoJSONReader on: pathFile asFileReference readStream)
     mapInstVarsFor: Point;
     for: Rectangle do: [ :mapping | 
             (mapping mapInstVar: #origin) valueSchema: Point.
-            (mapping mapInstVar: #corner) valueSchema: Point ];
+            "(mapping mapInstVar: #corner) valueSchema: Point" ];
     for: #Children customDo: [ :mapping | 
          mapping listOfType: OrderedCollection andElementSchema: RSTreeMapping
         ];
+	for: #StyleContext customDo: [ :mapping | 
+			mapping decoder: [ :dict |
+				((dict at: #getRGBAColor) at: #asColor) at: #asHexString ].
+		 ];
     for: RSTreeMapping do: [ :mapping | 
         (mapping mapAccessor: #allocation) valueSchema: Rectangle.
         (mapping mapAccessor: #size) valueSchema: Point.
+		  (mapping mapAccessor: #styleContext) valueSchema: #StyleContext.
         (mapping mapAccessor: #children) valueSchema: #Children ];
     nextAs: RSTreeMapping.
 	
@@ -59,7 +64,7 @@ RSLayoutConfiguration >> openInRoassal [
 	self assert: presenter isNotNil.
 	RSSingletonData 
 		reset;
-		reader: self mapJsonToDict.
+		reader: self deserialize.
 	presenter open
 	
 ]

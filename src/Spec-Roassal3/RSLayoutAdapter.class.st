@@ -31,9 +31,12 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 RSLayoutAdapter >> addModelTo: aWidget [
 	super addModelTo: aWidget.
 	"customLocation ifTrue: [ RSAdapter widgetData nextOrNil ]."
-	customLocation ifTrue: [ | reader info |
-		reader := RSSingletonData reader.
-		info := reader getMapping.
+	customLocation ifTrue: [ | tree node |
+		tree := RSSingletonData reader.
+		RSSingletonData reader: tree.
+		node := tree node.
+		aWidget paint: node color.
+		"aWidget translateBy: node allocation."
 		 ].
 	aWidget customLocation: customLocation.
 ]

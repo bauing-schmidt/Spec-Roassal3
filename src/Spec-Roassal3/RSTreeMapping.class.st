@@ -2,68 +2,96 @@ Class {
 	#name : #RSTreeMapping,
 	#superclass : #Object,
 	#instVars : [
-		'dictionary'
+		'node',
+		'read',
+		'parent'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
 
 { #category : #accessing }
-RSTreeMapping >> allocation: integer [
-	dictionary at: #allocation put: integer
+RSTreeMapping >> allocation: rectangle [
+	node allocation: rectangle origin
 ]
 
 { #category : #accessing }
 RSTreeMapping >> children: collection [
-	dictionary at: #children put: collection.
-	
+	node children: collection.
+	collection do: [ :tree | tree parent: self ]
 ]
 
 { #category : #testing }
 RSTreeMapping >> childrenAt: index [
-	^ self isLeaf 
-		ifTrue: [ nil ]
-		ifFalse: [ (dictionary at: #children) at: index ]
+	^ node childrenAt: index
 ]
 
 { #category : #accessing }
 RSTreeMapping >> className: string [
-	dictionary at: #className put: string
-]
-
-{ #category : #accessing }
-RSTreeMapping >> color: color [
-]
-
-{ #category : #'as yet unclassified' }
-RSTreeMapping >> getMapping [
-	^ (dictionary associations reject: [ :assoc | assoc key = #children ]) asDictionary 
+	node className: string
 ]
 
 { #category : #initialization }
-RSTreeMapping >> initialize [ 
-	dictionary := Dictionary new
-]
-
-{ #category : #testing }
-RSTreeMapping >> isLeaf [ 
-	^ dictionary at: #children
-		ifPresent: [ false ]
-		ifAbsent: [ true ]
-]
-
-{ #category : #'as yet unclassified' }
-RSTreeMapping >> nameOfClass: string [
-
+RSTreeMapping >> initialize [
+	node := RSNodeMapping new.
+	read := false
 ]
 
 { #category : #accessing }
-RSTreeMapping >> size: size [
-	dictionary at: #size put: size
+RSTreeMapping >> next [
+	^ self read
+		ifTrue: [ | res |
+			res := node next.
+			res 
+				ifNil: [ parent next ]
+				ifNotNil: [ res ] ]
+		ifFalse: [ 
+			self read: true.
+			self ]
+]
+
+{ #category : #accessing }
+RSTreeMapping >> node [
+	^ node
+]
+
+{ #category : #accessing }
+RSTreeMapping >> parent [
+
+	^ parent
+]
+
+{ #category : #accessing }
+RSTreeMapping >> parent: anObject [
+
+	parent := anObject
+]
+
+{ #category : #accessing }
+RSTreeMapping >> read [
+
+	^ read
+]
+
+{ #category : #accessing }
+RSTreeMapping >> read: boolean [
+
+	read := boolean
+]
+
+{ #category : #accessing }
+RSTreeMapping >> size: point [
+	node size: point
 ]
 
 { #category : #testing }
 RSTreeMapping >> sizeOfChildren [
-	^ self isLeaf 
+	"^ self isLeaf 
 		ifTrue: [ 0 ]
-		ifFalse: [ (dictionary at: #children) size ]
+		ifFalse: [ (dictionary at: #children) size ]"
+	^ node childrenSize
+]
+
+{ #category : #accessing }
+RSTreeMapping >> styleContext: string [
+	node color: (Color fromHexString: string)
 ]

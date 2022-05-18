@@ -9,15 +9,17 @@ RSGeneralAdapter >> addModelTo: rsWidget [
 	"| assoc |"
 	super addModelTo: rsWidget.
 	customLocation ifTrue: [
-		| reader info |
-		reader := RSSingletonData reader.
-		info := reader getMapping.
+		| tree node |
+		tree := RSSingletonData reader.
+		RSSingletonData reader: tree.
+		node := tree node.
 		"assoc := RSAdapter widgetData nextOrNil.
 		assoc ifNotNil: [ rsWidget extent: assoc value.
 		rsWidget translateBy: assoc key origin ]"
 		rsWidget 
-			extent: (info at: #size);
-			translateBy: (info at: #allocation) origin. 
+			extent: node size;
+			translateBy: node allocation;
+			color: node color.
 	] ifFalse: [ rsWidget extent: rsWidget preferredSizeMinimum ].
 	rsWidget customLocation: customLocation
 ]

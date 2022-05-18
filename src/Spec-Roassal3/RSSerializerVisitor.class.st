@@ -13,13 +13,13 @@ RSSerializerVisitor >> defaultDataToSerialize [
 		at: Point put: [ :mapping | mapping mapAllInstVars ];
 		at: Rectangle put: [ :mapping | 
 						(mapping mapInstVar: #origin) valueSchema: Point.
-						(mapping mapInstVar: #corner) valueSchema: Point ];
-		"at: Color put: [ :mapping | 
-			mapping  ];
+						"(mapping mapInstVar: #corner) valueSchema: Point" ];
+		at: Color put: [ :mapping | 
+			mapping mapAccessor: #asHexString ];
 		at: GdkRGBA put: [ :mapping | 
 			(mapping mapAccessor: #asColor) valueSchema: Color ];
 		at: GtkStyleContext put: [ :mapping | 
-			(mapping mapAccessor: #getRGBAColor) valueSchema: GdkRGBA ]  ;"
+			(mapping mapAccessor: #getRGBAColor) valueSchema: GdkRGBA ]  ;
 		yourself
 ]
 
@@ -50,7 +50,7 @@ RSSerializerVisitor >> visitContainer: widget [
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#allocation #size #className #children)).
+						(mapping mapAccessors: #(#className #allocation #size #children #styleContext)).
 						"(mapping mapInstVar: #color) valueSchema: Color" ]. "revisar para serializar"
 	widget children do: [:child | child accept: self. 
 		dict addAll: mappingDictionary ].
@@ -62,6 +62,6 @@ RSSerializerVisitor >> visitWidget: widget [
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#allocation #size #className)) ].
+						(mapping mapAccessors: #(#className #allocation #size #styleContext)) ].
 	mappingDictionary := dict
 ]
