@@ -42,14 +42,31 @@ RSSerializerVisitor >> serialize: object given: stream [
 ]
 
 { #category : #serializing }
-RSSerializerVisitor >> serialize: object on: string [
+RSSerializerVisitor >> serialize: presenter on: string [
+	| window |
+	window := presenter owner adapter widget.
 	self assert: (string isString and: [ string isNotEmpty ]).
 	string asFileReference 
 		ensureDelete writeStreamDo: [ :stream |
-			object accept: self.
-			self serialize: object given: stream
+			window accept: self.
+			self serialize: window given: stream
 	]
 	
+]
+
+{ #category : #visiting }
+RSSerializerVisitor >> visitButton: widget [
+	| dict |
+	dict := self defaultDataToSerialize.
+	dict at: widget class put: [ :mapping | 
+						mapping
+							mapAccessor: #className;
+							mapAccessor: #allocation;
+							mapAccessor: #size;
+							mapAccessor: #styleContext;
+							mapAccessor: #getImage.						
+				]. 
+	mappingDictionary := dict
 ]
 
 { #category : #visiting }
@@ -69,7 +86,8 @@ RSSerializerVisitor >> visitWidget: widget [
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#className #allocation #size #styleContext)) ].
+		mapping mapAccessors:
+			#( #className #allocation #size #styleContext ) ].
 	mappingDictionary := dict
 ]
 

@@ -107,6 +107,6 @@ RSTreeMapping >> sizeOfChildren [
 ]
 
 { #category : #accessing }
-RSTreeMapping >> styleContext: string [
-	node color: (Color fromHexString: string)
+RSTreeMapping >> styleContext: assoc [
+	node color: ((Color fromHexString: assoc key) alpha: assoc value)
 ]
