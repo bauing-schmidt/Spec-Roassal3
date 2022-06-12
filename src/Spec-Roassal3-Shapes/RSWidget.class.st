@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSComposite,
 	#instVars : [
 		'data',
-		'customLocation'
+		'customLocation',
+		'info'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget'
 }
@@ -40,6 +41,11 @@ RSWidget >> data [
 RSWidget >> data: anObject [
 
 	data := anObject
+]
+
+{ #category : #accessing }
+RSWidget >> info: aNode [
+	info := aNode
 ]
 
 { #category : #initialization }

@@ -18,15 +18,16 @@ RSButton >> build [
 	@ (RSHighlightable color: self defaultColor darker)"
 ]
 
-{ #category : #initialization }
-RSButton >> defaultColor [
-	^ Color gray
-]
-
 { #category : #'as yet unclassified' }
 RSButton >> defaultColorLabel [
 
 	^ Color white
+]
+
+{ #category : #adding }
+RSButton >> getImage [
+
+	^ RSImage new path: info path; build
 ]
 
 { #category : #adding }

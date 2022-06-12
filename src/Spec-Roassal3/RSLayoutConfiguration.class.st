@@ -3,22 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'pathFile',
-		'presenter',
-		'base',
-		'toConfigure'
+		'presenter'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
-
-{ #category : #accessing }
-RSLayoutConfiguration >> adjust: rsPresenter [
-	toConfigure := rsPresenter 
-]
-
-{ #category : #accessing }
-RSLayoutConfiguration >> base: gtkPresenter [
-	base := gtkPresenter 
-]
 
 { #category : #'instance creation' }
 RSLayoutConfiguration >> deserialize [
@@ -32,12 +20,22 @@ RSLayoutConfiguration >> deserialize [
         ];
 	for: #StyleContext customDo: [ :mapping | 
 			mapping decoder: [ :dict |
-				((dict at: #getRGBAColor) at: #asColor) at: #asHexString ].
+				| alphaAux |
+				alphaAux := (dict at: #getRGBAColor) at: #asColor.
+				(alphaAux at: #asHexString) -> (alphaAux at: #alpha) ]
 		 ];
-    for: RSTreeMapping do: [ :mapping | 
+	for: #Image customDo: [ :mapping |
+			mapping decoder: [ :dict |
+				dict at: #url ].
+		 ];
+	for: #GetImage customDo: [ :mapping | 
+		mapping decoder: [ :dict | dict at: #image ] ];
+   for: RSTreeMapping do: [ :mapping | 
         (mapping mapAccessor: #allocation) valueSchema: Rectangle.
         (mapping mapAccessor: #size) valueSchema: Point.
 		  (mapping mapAccessor: #styleContext) valueSchema: #StyleContext.
+		  (mapping mapAccessor: #image) valueSchema: #Image.
+		  (mapping mapAccessor: #getImage) valueSchema: #GetImage.
         (mapping mapAccessor: #children) valueSchema: #Children ];
     nextAs: RSTreeMapping.
 	
@@ -45,21 +43,6 @@ RSLayoutConfiguration >> deserialize [
 
 { #category : #'instance creation' }
 RSLayoutConfiguration >> open [
-	| visitor |
-	self assert: toConfigure isNotNil.
-	self assert: base isNotNil.
-	visitor := RSCollectorVisitor new.
-	base open.
-	base adapter ifNotNil: [ base adapter widget ifNotNil: [ base adapter widget accept: visitor ] ].
-	RSAdapter resetWidgetData.
-	RSAdapter widgetData: visitor data.
-	self halt.
-	toConfigure open.
-	RSAdapter resetWidgetData
-]
-
-{ #category : #'instance creation' }
-RSLayoutConfiguration >> openInRoassal [
 	self assert: pathFile asFileReference exists.
 	self assert: presenter isNotNil.
 	RSSingletonData 
@@ -71,7 +54,6 @@ RSLayoutConfiguration >> openInRoassal [
 
 { #category : #accessing }
 RSLayoutConfiguration >> pathFile: path [
-	"base := presenter"
 	pathFile := path 
 ]
 

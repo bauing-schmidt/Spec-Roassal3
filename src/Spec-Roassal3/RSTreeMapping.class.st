@@ -30,6 +30,21 @@ RSTreeMapping >> className: string [
 	node className: string
 ]
 
+{ #category : #'as yet unclassified' }
+RSTreeMapping >> getImage: dict [
+	self image: (dict at: 'url')
+]
+
+{ #category : #accessing }
+RSTreeMapping >> image [
+	^ node path
+]
+
+{ #category : #accessing }
+RSTreeMapping >> image: string [
+	node path: string
+]
+
 { #category : #initialization }
 RSTreeMapping >> initialize [
 	node := RSNodeMapping new.

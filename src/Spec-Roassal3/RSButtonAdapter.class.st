@@ -23,11 +23,6 @@ RSButtonAdapter >> addModelTo: rsButton [
 		self presenter performAction ]"
 ]
 
-{ #category : #initialization }
-RSButtonAdapter >> defaultColor [
-	^ Color gray
-]
-
 { #category : #'instance creation' }
 RSButtonAdapter >> newWidget [ 
 	

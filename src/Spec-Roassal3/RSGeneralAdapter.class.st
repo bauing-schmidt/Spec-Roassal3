@@ -19,7 +19,8 @@ RSGeneralAdapter >> addModelTo: rsWidget [
 		rsWidget 
 			extent: node size;
 			translateBy: node allocation;
-			color: node color.
+			color: node color;
+			info: node.
 	] ifFalse: [ rsWidget extent: rsWidget preferredSizeMinimum ].
 	rsWidget customLocation: customLocation
 ]

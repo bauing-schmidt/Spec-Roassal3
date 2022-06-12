@@ -6,7 +6,8 @@ Class {
 		'children',
 		'size',
 		'className',
-		'allocation'
+		'allocation',
+		'path'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
@@ -81,6 +82,16 @@ RSNodeMapping >> next [
 		detect: [ :child | child read not ]
 		ifFound: [ :child | child next ]
 		ifNone: [ nil ]
+]
+
+{ #category : #accessing }
+RSNodeMapping >> path [ 
+	^path
+]
+
+{ #category : #accessing }
+RSNodeMapping >> path: pathImage [ 
+	path := pathImage
 ]
 
 { #category : #accessing }

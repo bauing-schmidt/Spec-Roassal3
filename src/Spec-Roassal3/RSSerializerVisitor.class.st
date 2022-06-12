@@ -15,11 +15,18 @@ RSSerializerVisitor >> defaultDataToSerialize [
 						(mapping mapInstVar: #origin) valueSchema: Point.
 						"(mapping mapInstVar: #corner) valueSchema: Point" ];
 		at: Color put: [ :mapping | 
-			mapping mapAccessor: #asHexString ];
+			mapping
+				mapAccessor: #asHexString;
+				mapAccessor: #alpha
+			];
 		at: GdkRGBA put: [ :mapping | 
 			(mapping mapAccessor: #asColor) valueSchema: Color ];
 		at: GtkStyleContext put: [ :mapping | 
-			(mapping mapAccessor: #getRGBAColor) valueSchema: GdkRGBA ]  ;
+			(mapping mapAccessor: #getBackgroundRGBAColor to:#getRGBAColor) valueSchema: GdkRGBA ]  ;
+		at: GdkPixbuf put: [ :mapping | 
+			mapping mapAccessor: #saveImage to: #url ];
+		at: GtkImage put: [ :mapping | 
+			mapping mapAccessor: #getPixbuf to: #image ];
 		yourself
 ]
 
@@ -63,5 +70,23 @@ RSSerializerVisitor >> visitWidget: widget [
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
 						(mapping mapAccessors: #(#className #allocation #size #styleContext)) ].
+	mappingDictionary := dict
+]
+
+{ #category : #visiting }
+RSSerializerVisitor >> visitWindow: widget [
+	| dict |
+	dict := self defaultDataToSerialize.
+	dict at: widget class put: [ :mapping | 
+						mapping
+							"mapAccessors: #(#className #allocation #size #icon #styleContext))."
+							mapAccessor: #className;
+							mapAccessor: #allocation;
+							mapAccessor: #size;
+							mapAccessor: #children;
+							mapAccessor: #styleContext.					
+				]. 
+	widget children do: [:child | child accept: self. 
+		dict addAll: mappingDictionary ].
 	mappingDictionary := dict
 ]

@@ -12,7 +12,7 @@ RSBaseButtonAdapter >> addModelTo: roassalButton [
 	widget := roassalButton.
 
 	self presenter label isEmptyOrNil ifFalse: [ self updateLabel ].
-	self presenter icon ifNotNil: [ self updateIcon ].
+	"self presenter icon ifNotNil: [ self updateIcon ]."
 	
 	"model whenLabelChangedDo: [ self updateLabel ].
 	model whenIconChangedDo: [ self updateIcon ]"
