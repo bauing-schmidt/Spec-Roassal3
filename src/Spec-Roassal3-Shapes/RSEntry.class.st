@@ -21,9 +21,9 @@ RSEntry >> build [
 
 	self
 		add: self label;
-		"color: Color white;"
-		"extent: self extent;"translateBy: self extent / 2;
-		withBorder
+		"color: Color white;""extent: self extent;"translateBy:
+			self extent / 2;
+		withBorder.
 ]
 
 { #category : #'as yet unclassified' }
@@ -64,10 +64,12 @@ RSEntry >> input [
 
 { #category : #accessing }
 RSEntry >> label [
-	^ RSLabel new 
-		color: self getColor; 
-		text: self getText";
-		translateBy: 0@0"
+
+	^ RSLabel new
+		  color: self getColor;
+		  text: self getText ";;
+		translateBy: 0@0";
+		extent: 30@60
 ]
 
 { #category : #accessing }
