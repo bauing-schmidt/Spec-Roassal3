@@ -2,32 +2,39 @@ Class {
 	#name : #RSSerializerVisitor,
 	#superclass : #Object,
 	#instVars : [
-		'mappingDictionary'
+		'mappingDictionary',
+		'pathImage'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
 
 { #category : #'as yet unclassified' }
 RSSerializerVisitor >> defaultDataToSerialize [
+
 	^ OrderedDictionary new
-		at: Point put: [ :mapping | mapping mapAllInstVars ];
-		at: Rectangle put: [ :mapping | 
-						(mapping mapInstVar: #origin) valueSchema: Point.
-						"(mapping mapInstVar: #corner) valueSchema: Point" ];
-		at: Color put: [ :mapping | 
-			mapping
-				mapAccessor: #asHexString;
-				mapAccessor: #alpha
-			];
-		at: GdkRGBA put: [ :mapping | 
-			(mapping mapAccessor: #asColor) valueSchema: Color ];
-		at: GtkStyleContext put: [ :mapping | 
-			(mapping mapAccessor: #getBackgroundRGBAColor to:#getRGBAColor) valueSchema: GdkRGBA ]  ;
-		at: GdkPixbuf put: [ :mapping | 
-			mapping mapAccessor: #saveImage to: #url ];
-		at: GtkImage put: [ :mapping | 
-			mapping mapAccessor: #getPixbuf to: #image ];
-		yourself
+		  at: Point put: [ :mapping | mapping mapAllInstVars ];
+		  at: Rectangle put: [ :mapping | 
+			  (mapping mapInstVar: #origin) valueSchema: Point
+			  "(mapping mapInstVar: #corner) valueSchema: Point" ];
+		  at: Color put: [ :mapping | 
+			  mapping
+				  mapAccessor: #asHexString;
+				  mapAccessor: #alpha ];
+		  at: GdkRGBA
+		  put: [ :mapping | 
+		  (mapping mapAccessor: #asColor) valueSchema: Color ];
+		  at: GtkStyleContext put: [ :mapping | 
+		  (mapping mapAccessor: #getBackgroundRGBAColor to: #getRGBAColor) 
+			  valueSchema: GdkRGBA ];
+		  at: GdkPixbuf
+		  put: [ :mapping | "mapping mapAccessor: #saveImage to: #url"
+			  mapping
+				  mapProperty: #url
+				  getter: [ :object | object saveImage: pathImage ]
+				  setter: [  ] ];
+		  at: GtkImage
+		  put: [ :mapping | mapping mapAccessor: #getPixbuf to: #image ];
+		  yourself
 ]
 
 { #category : #serializing }
@@ -43,7 +50,15 @@ RSSerializerVisitor >> serialize: object given: stream [
 
 { #category : #serializing }
 RSSerializerVisitor >> serialize: presenter on: string [
+
+	self serialize: presenter on: string given: ''
+]
+
+{ #category : #serializing }
+RSSerializerVisitor >> serialize: presenter on: string given: path [
 	| window |
+	path ifNotEmpty: [ self assert: path asFileReference exists ].
+	pathImage := path.
 	window := presenter owner adapter widget.
 	self assert: (string isString and: [ string isNotEmpty ]).
 	string asFileReference 
@@ -71,13 +86,26 @@ RSSerializerVisitor >> visitButton: widget [
 
 { #category : #visiting }
 RSSerializerVisitor >> visitContainer: widget [
+
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#className #allocation #size #children #styleContext)).
-						"(mapping mapInstVar: #color) valueSchema: Color" ]. "revisar para serializar"
-	widget children do: [:child | child accept: self. 
-		dict addAll: mappingDictionary ].
+		mapping mapAccessors:
+			#( #className #allocation #size #children #styleContext )
+		"(mapping mapInstVar: #color) valueSchema: Color" ]. "revisar para serializar"
+	widget children do: [ :child | 
+		child accept: self.
+		mappingDictionary ifNotNil: [ dict addAll: mappingDictionary ] 
+	].
+	mappingDictionary := dict
+]
+
+{ #category : #visiting }
+RSSerializerVisitor >> visitInfoArea: widget [
+	| dict |
+	dict := OrderedDictionary new.
+	dict at: widget class put: [ :mapping | 
+		mapping mapAccessor: #className ].
 	mappingDictionary := dict
 ]
 
@@ -93,18 +121,19 @@ RSSerializerVisitor >> visitWidget: widget [
 
 { #category : #visiting }
 RSSerializerVisitor >> visitWindow: widget [
+
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						mapping
-							"mapAccessors: #(#className #allocation #size #icon #styleContext))."
-							mapAccessor: #className;
-							mapAccessor: #allocation;
-							mapAccessor: #size;
-							mapAccessor: #children;
-							mapAccessor: #styleContext.					
-				]. 
-	widget children do: [:child | child accept: self. 
+		mapping
+			mapAccessor: #className;
+			mapAccessor: #allocation;
+			mapAccessor: #size;
+			mapAccessor: #children;
+			mapAccessor: #styleContext
+		"mapAccessors: #(#className #allocation #size #icon #styleContext))." ].
+	widget children do: [ :child | 
+		child accept: self.
 		dict addAll: mappingDictionary ].
 	mappingDictionary := dict
 ]

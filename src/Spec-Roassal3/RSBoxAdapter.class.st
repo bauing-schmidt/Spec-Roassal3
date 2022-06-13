@@ -21,6 +21,7 @@ RSBoxAdapter >> addConstraints: constraints toChild: childWidget [
 
 { #category : #adding }
 RSBoxAdapter >> addModelTo: rsLayout [
+
 	super addModelTo: rsLayout.
 	rsLayout build
 ]

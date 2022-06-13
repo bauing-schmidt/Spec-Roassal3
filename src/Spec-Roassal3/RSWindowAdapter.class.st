@@ -81,28 +81,51 @@ RSWindowAdapter >> openWithDeferredAction: aBlock [
 { #category : #'private building' }
 RSWindowAdapter >> populateContent: group spec: aSpec window: roassalWindow [
 
+	customLocation := RSSingletonData hasReader.
+	customLocation ifTrue: [ 
+		| tree node |
+		tree := RSSingletonData reader.
+		RSSingletonData reader: tree.
+		node := tree node.
+		roassalWindow
+			extent: node size;
+			color: node color.
+
+		tree := RSSingletonData reader.
+		RSSingletonData reader: tree.
+		node := tree node.
+		tree := node children second.
+		RSSingletonData reader: tree ].
+
 	"menu bar"
+
 	"self model hasMenu ifTrue: [ 
 		roassalBox 
 			packStart: (self menuBarAccelInstalledOn: roassalWindow) 
 			expand: false 
 			fill: false 
 			padding: 0 ]."
+
 	"tool bar"
+
 	"self model hasToolbar ifTrue: [ 
 		roassalBox 
 			packStart: self toolbar 
 			expand: false 
 			fill: false 
 			padding: 0 ]."
+
 	"infoArea"
+
 	"contentBox
 		packStart: self infoArea
 		expand: false
 		fill: false
 		padding: 0."
+
 	"contents"
-	group add: (self contentWithSpecLayout: aSpec).
+
+	group add: (self contentWithSpecLayout: aSpec)
 	"status bar"
 	"self model hasStatusBar ifTrue: [ 
 		roassalBox 
