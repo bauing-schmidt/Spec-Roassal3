@@ -51,6 +51,7 @@ RSBoxAdapter >> applyLayout: aLayout [
 
 { #category : #adding }
 RSBoxAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
+
 	| childWidget |
 	childWidget := aPresenter buildWithSelector: constraints spec.
 	"self addConstraints: constraints toChild: childWidget."
