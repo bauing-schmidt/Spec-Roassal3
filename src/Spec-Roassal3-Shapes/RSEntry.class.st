@@ -16,13 +16,14 @@ RSEntry >> bePassword [
 
 { #category : #building }
 RSEntry >> build [
+
 	"self add: (self input translateBy: self extent/2)"
-	self 
-	add: self label;
-	color: Color white;
-	"extent: self extent;"
-	translateBy: self extent / 2;
-	withBorder
+
+	self
+		add: self label;
+		"color: Color white;"
+		"extent: self extent;"translateBy: self extent / 2;
+		withBorder
 ]
 
 { #category : #'as yet unclassified' }

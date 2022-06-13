@@ -5,16 +5,26 @@ Class {
 }
 
 { #category : #building }
-RSSpinButton >> build [ 
-	| group input addIcon lineLayout |
-	input := RSEntry new text: text; placeholder: placeholder; build.
-	addIcon := RSBitmap new form: (self iconNamed: #remotesManagerAddRemote).
+RSSpinButton >> build [
+
+	| group addIcon lineLayout |
+	self add: self label.
+	addIcon := RSBitmap new form:
+		           (self iconNamed: #remotesManagerAddRemote).
 	lineLayout := RSHorizontalLineLayout new.
-	group := RSGroup new 
-		add: (input extent: self extent - ((addIcon extent x * 2 + (lineLayout horizontalGap * 2))@0));
-		add: (RSBitmap new form: (self iconNamed: #remotesManagerRemoveRemote));
-		add: addIcon;
-		yourself.
+	group := RSGroup new
+		         add:
+			         (RSBitmap new form:
+					          (self iconNamed: #remotesManagerRemoveRemote));
+		         add: addIcon;
+		         yourself.
+	"add: (input extent: self extent
+					          -
+						          (addIcon extent x * 2 + (lineLayout horizontalGap * 2)
+						           @ 0));"
 	self addAll: group.
-	lineLayout on: group
+	lineLayout on: group.
+	self
+		translateBy: self extent / 2;
+		withBorder
 ]
