@@ -22,9 +22,13 @@ RSLayoutConfiguration >> deserialize [
 				  andElementSchema: RSTreeMapping ];
 		  for: #StyleContext customDo: [ :mapping | 
 			  mapping decoder: [ :dict | 
-					  | alphaAux |
+					  | alphaAux dictionary |
 					  alphaAux := (dict at: #getRGBAColor) at: #asColor.
-					  (alphaAux at: #asHexString) -> (alphaAux at: #alpha) ] ];
+					  dictionary := Dictionary new.
+					  dictionary at: 'backgroundColor' put: ((Color fromHexString: (alphaAux at: #asHexString)) alpha: (alphaAux at: #alpha)).
+					  alphaAux := (dict at: #getActiveRGBAColor) at: #asColor.
+					  dictionary at: 'fontColor' put: ((Color fromHexString: (alphaAux at: #asHexString)) alpha: (alphaAux at: #alpha)).
+					dictionary ] ];
 		  for: #Image
 		  customDo: [ :mapping | mapping decoder: [ :dict | dict at: #url ] ];
 		  for: #GetImage

@@ -25,7 +25,9 @@ RSSerializerVisitor >> defaultDataToSerialize [
 		  (mapping mapAccessor: #asColor) valueSchema: Color ];
 		  at: GtkStyleContext put: [ :mapping | 
 		  (mapping mapAccessor: #getBackgroundRGBAColor to: #getRGBAColor) 
-			  valueSchema: GdkRGBA ];
+			  valueSchema: GdkRGBA.
+			(mapping mapAccessor: #getActiveRGBAColor)
+			valueSchema: GdkRGBA. ];
 		  at: GdkPixbuf
 		  put: [ :mapping | "mapping mapAccessor: #saveImage to: #url"
 			  mapping

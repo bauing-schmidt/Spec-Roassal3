@@ -21,12 +21,6 @@ RSButton >> build [
 	@ (RSHighlightable color: self defaultColor darker)"
 ]
 
-{ #category : #'as yet unclassified' }
-RSButton >> defaultColorLabel [
-
-	^ Color white
-]
-
 { #category : #adding }
 RSButton >> getImage [
 
@@ -35,7 +29,7 @@ RSButton >> getImage [
 
 { #category : #adding }
 RSButton >> label [
-	^ RSLabel new color: self defaultColorLabel; text: text
+	^ RSLabel new color: info fontColor; text: text
 ]
 
 { #category : #geometry }

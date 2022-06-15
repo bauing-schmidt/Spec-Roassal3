@@ -7,7 +7,8 @@ Class {
 		'size',
 		'className',
 		'allocation',
-		'path'
+		'path',
+		'fontColor'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
@@ -69,6 +70,17 @@ RSNodeMapping >> color [
 { #category : #accessing }
 RSNodeMapping >> color: aColor [ 
 	color := aColor
+]
+
+{ #category : #accessing }
+RSNodeMapping >> fontColor [
+
+	^ fontColor
+]
+
+{ #category : #accessing }
+RSNodeMapping >> fontColor: aColor [ 
+	fontColor := aColor
 ]
 
 { #category : #initialization }

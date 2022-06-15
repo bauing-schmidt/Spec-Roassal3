@@ -7,7 +7,6 @@ Class {
 { #category : #adding }
 RSButtonAdapter >> addModelTo: rsButton [
 	super addModelTo: rsButton.
-
 	rsButton 
 	text: self getLabelText;
 	build
