@@ -19,11 +19,13 @@ RSEntry >> build [
 
 	"self add: (self input translateBy: self extent/2)"
 
+	"	self halt."
+
 	self
 		add: self label;
 		"color: Color white;""extent: self extent;"translateBy:
 			self extent / 2;
-		withBorder.
+			withBorder
 ]
 
 { #category : #'as yet unclassified' }

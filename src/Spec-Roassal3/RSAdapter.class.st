@@ -48,7 +48,10 @@ RSAdapter class >> widgetData: object [
 
 { #category : #adding }
 RSAdapter >> addModelTo: rsWidget [
-	customLocation := RSSingletonData hasReader
+
+	"self halt."
+
+	"customLocation := RSSingletonData hasReader"
 ]
 
 { #category : #factory }
@@ -70,9 +73,10 @@ RSAdapter >> hasWidget [
 ]
 
 { #category : #initialization }
-RSAdapter >> initialize [ 
+RSAdapter >> initialize [
+
 	super initialize.
-	customLocation := false
+	customLocation := RSSingletonData hasReader
 ]
 
 { #category : #'instance creation' }

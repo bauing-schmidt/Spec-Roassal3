@@ -28,7 +28,6 @@ RSSpinButton >> build [
 						           @ 0));"
 	self addAll: group.
 	lineLayout on: group.
-	self
-		translateBy: self extent / 2;
-		withBorder
+	self withBorder.
+	self translateBy: self extent / 2
 ]

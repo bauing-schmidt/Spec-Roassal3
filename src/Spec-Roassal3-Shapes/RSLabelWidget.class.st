@@ -14,13 +14,15 @@ RSLabelWidget >> addOn: canvas [
 
 { #category : #building }
 RSLabelWidget >> build [
+
 	"self halt."
-	self add: (RSLabel new 
-		color: Color black;
-		text: text
-		"extent: self extent").
-	self translateBy: self nodes first extent / 2.	
-		"self halt."
+
+	self add: (RSLabel new
+			 color: Color black;
+			 text: text).
+	"extent: self extent"
+	self translateBy: self nodes first extent / 2
+	"self halt."
 	"self padding: 1"
 ]
 

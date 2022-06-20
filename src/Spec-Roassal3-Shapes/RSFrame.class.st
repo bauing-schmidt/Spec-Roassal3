@@ -12,30 +12,32 @@ RSFrame class >> newLabel: string [
 	^ self new label: string
 ]
 
-{ #category : #adding }
-RSFrame >> addOn: canvas [
-	super addOn: canvas 
-]
-
 { #category : #building }
 RSFrame >> build [
 
-	| col aux aux2 |
-	col := RSGroup new.
+	| aux aux2 |
+	"col := RSGroup new."
 	aux := self extent.
 	aux2 := aux x / 2 @ (aux y / 2).
 	labelWidget ifNotNil: [ 
 		labelWidget build.
-		col add: labelWidget.
+		self add: labelWidget.
 		labelWidget translateBy:
 			aux2 x negated @ (aux2 y + labelWidget extent y) negated ].
-	"col addAll: list."
-	col addAll: (list collect: [ :element | 
-			self halt. 
-			element position:
+	self halt.
+	self addAll: list.
+
+	"self addAll: list."
+	"self addAll: (list collect: [ :element | ""self halt."" 
+			 element position: element position - (self extent / 2) ])."
+	"self addAll: (list collect: [ :element | 
+			 element position:
 				 (self extent x / 2 - (element extent x / 2)) negated
-				 @ (self extent y / 2 - (element extent y / 2)) negated ]).
-	self addAll: col.
+				 @ (self extent y / 2 - (element extent y / 2)) negated ])."
+
+
+
+	"self addAll: col."
 	"	list ifNotEmpty: [ list first translateBy: aux2 negated ]."
 	"col translateBy: self extent negated."
 	"customLocation
@@ -44,8 +46,9 @@ RSFrame >> build [
 			RSVerticalLineLayout on: col.
 			self shapes: col ]."
 	"self adjustToChildren."
-	self withBorder.
-	self translateBy: aux2
+	self withBorder
+	"self translateBy: aux2"
+	"self color: Color green"
 	"self padding: 1."
 
 	"self translateTo: 0@0."

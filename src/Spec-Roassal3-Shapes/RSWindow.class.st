@@ -20,10 +20,10 @@ RSWindow >> openWithTitle: aTitleAsString [
 
 	| window |
 	self createMorph.
-"	self color: Color transparent ."
+	"	self color: Color transparent ."
 	window := morph openInWindowLabeled: aTitleAsString.
 	window extent: extent.
-	"morph privateOwner: window."
+	morph privateOwner: window.
 	^ window
 ]
 

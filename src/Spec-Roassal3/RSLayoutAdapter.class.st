@@ -8,10 +8,11 @@ Class {
 }
 
 { #category : #building }
-RSLayoutAdapter >> adapterWasBuilt [ 
-	self widget 
+RSLayoutAdapter >> adapterWasBuilt [
+
+	self widget
 		customLocation: customLocation;
-	 	build
+		build
 ]
 
 { #category : #adding }
@@ -24,13 +25,14 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 			constraints: constraints 
 			to: rsWidget.
 		self addWidgetAlignment: constraints to: childWidget.
-		childWidget data: aPresenter ]
+		"childWidget data: aPresenter" ]
 ]
 
 { #category : #adding }
 RSLayoutAdapter >> addModelTo: aWidget [
 
 	super addModelTo: aWidget.
+	aWidget build.
 	"customLocation ifTrue: [ RSAdapter widgetData nextOrNil ]."
 	"customLocation ifTrue: [ 
 		| tree node |
@@ -53,12 +55,12 @@ RSLayoutAdapter >> addWidgetAlignment: constraints to: rsWidget [
 { #category : #private }
 RSLayoutAdapter >> applyLayout: aLayout [
 
-		self subclassResponsibility
-
+	self subclassResponsibility 
 ]
 
 { #category : #adding }
 RSLayoutAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
+
 	self subclassResponsibility 
 ]
 
@@ -68,9 +70,11 @@ RSLayoutAdapter >> build [
 ]
 
 { #category : #factory }
-RSLayoutAdapter >> buildWidget [ 
-	"^ nil"
-	^ super buildWidget 
+RSLayoutAdapter >> buildWidget [
+
+	^ nil
+
+	"^ super buildWidget"
 ]
 
 { #category : #building }
@@ -107,17 +111,29 @@ RSLayoutAdapter >> newInstance: class [
 
 	| instance |
 	instance := class new.
-	self halt.
 
 	customLocation ifTrue: [ 
 		| tree node |
 		tree := RSSingletonData reader.
 		RSSingletonData reader: tree.
 		node := tree node.
-		instance
+		self setCustomProperties: node to: instance
+		"instance
 			paint: node color;
 			extent: node size;
-			info: node
+			info: node"
 		"aWidget translateBy: node allocation." ].
-	instance customLocation: customLocation
+	"instance customLocation: customLocation."
+	^ instance
+]
+
+{ #category : #initialization }
+RSLayoutAdapter >> setCustomProperties: node to: instance [
+
+	instance
+		paint: node color;
+		extent: node size;
+		position: node allocation;
+		info: node;
+		customLocation: customLocation
 ]

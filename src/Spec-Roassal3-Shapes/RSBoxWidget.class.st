@@ -17,14 +17,31 @@ RSBoxWidget >> addChild: rsWidget given: expand fill: fill padding: padding [
 { #category : #building }
 RSBoxWidget >> build [
 
-	self color: Color blue.
-	"self translateBy: -10@20."
-	"self position: (self extent x) negated@ (self extent y) negated."
-	"self halt."
-	"self addAll: (elements collect: [ :element | 
-			 element position:
-				 (self extent x / 2 - (element extent x / 2)) negated
-				 @ (self extent y / 2 - (element extent y / 2)) negated ])"
+	"self translateBy: -10@20.""self position: (self extent x) negated@ (self extent y) negated."
+
+	self addAll: (elements collect: [ :element | 
+			 element class == self class
+				 ifTrue: [ 
+					 element color: Color red.
+					 element position: element position - self position ]
+				 ifFalse: [ "self halt." 
+					 element position:
+						 element position - (self extent / 2) - self position ].
+			 element ]).
+	"element position:
+				 element position - (self extent / 2) - self position ])"
+
+	self color: Color yellow
+
+	"self addAll: elements"
+	"self add: (elements first position:
+			 (self extent x / 2 - (elements first position x / 2)) negated
+			 @ (self extent y / 2 negated + (elements first position y / 2)))."
+
+	"aux := self extent.
+	aux2 := aux x / 2 @ (aux y / 2).
+	self translateBy: aux2"
+	"self position: self extent / 2 + self position / 2"
 
 	"customLocation
 		ifTrue: [ self addAll: elements ]
@@ -60,12 +77,18 @@ RSBoxWidget >> initialize [
 ]
 
 { #category : #accessing }
-RSBoxWidget >> packStart: child expand: expand fill: fill padding: padding [ 
+RSBoxWidget >> packStart: child expand: expand fill: fill padding: padding [
+
 	"self keepWidget: child."
+
 	"child is the element to add in the layout, expand and fill are booleans. Padding is a number"
-	"self halt."
-	self addChild: child given: expand fill: fill padding: padding.
-	
+
+	self
+		addChild: child
+		given: expand
+		fill: fill
+		padding: padding.
+
 	^ child
 ]
 
