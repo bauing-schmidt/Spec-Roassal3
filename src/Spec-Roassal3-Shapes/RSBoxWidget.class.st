@@ -16,13 +16,22 @@ RSBoxWidget >> addChild: rsWidget given: expand fill: fill padding: padding [
 
 { #category : #building }
 RSBoxWidget >> build [
-	customLocation
-		ifTrue: [ self addAll: elements ] 
+
+	self color: Color blue.
+	"self translateBy: -10@20."
+	"self position: (self extent x) negated@ (self extent y) negated."
+	"self halt."
+	"self addAll: (elements collect: [ :element | 
+			 element position:
+				 (self extent x / 2 - (element extent x / 2)) negated
+				 @ (self extent y / 2 - (element extent y / 2)) negated ])"
+
+	"customLocation
+		ifTrue: [ self addAll: elements ]
 		ifFalse: [ 
 			lineLayout ifNil: [ lineLayout := self defaultLineLayout ].
 			lineLayout on: elements.
-			self shapes: elements
-		 ]
+			self shapes: elements ]"
 ]
 
 { #category : #'as yet unclassified' }
@@ -54,6 +63,7 @@ RSBoxWidget >> initialize [
 RSBoxWidget >> packStart: child expand: expand fill: fill padding: padding [ 
 	"self keepWidget: child."
 	"child is the element to add in the layout, expand and fill are booleans. Padding is a number"
+	"self halt."
 	self addChild: child given: expand fill: fill padding: padding.
 	
 	^ child

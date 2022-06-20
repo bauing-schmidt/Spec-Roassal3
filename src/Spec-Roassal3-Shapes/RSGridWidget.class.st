@@ -14,13 +14,16 @@ RSGridWidget >> attach: child at: aPoint span: spanPoint [
 
 { #category : #building }
 RSGridWidget >> build [ 
+"self paint: Color green."
 	customLocation
 		ifTrue: [ self addAll: elements ] 
 		ifFalse: [ 
 			RSGridLayout new lineItemsCount: 2; 
 			on: elements.
 			self addAll: elements.
-			self padding: 1 ]
+			self padding: 1 ].
+	"self halt.
+	self paint: Color green."
 	"self padding: 1"
 ]
 

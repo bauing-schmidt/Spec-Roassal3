@@ -29,16 +29,20 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 
 { #category : #adding }
 RSLayoutAdapter >> addModelTo: aWidget [
+
 	super addModelTo: aWidget.
 	"customLocation ifTrue: [ RSAdapter widgetData nextOrNil ]."
-	customLocation ifTrue: [ | tree node |
+	"customLocation ifTrue: [ 
+		| tree node |
 		tree := RSSingletonData reader.
 		RSSingletonData reader: tree.
 		node := tree node.
-		aWidget paint: node color.
-		"aWidget translateBy: node allocation."
-		 ].
-	aWidget customLocation: customLocation.
+		aWidget
+			paint: node color;
+			extent: node size;
+			info: node
+		""aWidget translateBy: node allocation."" ].
+	aWidget customLocation: customLocation"
 ]
 
 { #category : #adding }
@@ -49,7 +53,8 @@ RSLayoutAdapter >> addWidgetAlignment: constraints to: rsWidget [
 { #category : #private }
 RSLayoutAdapter >> applyLayout: aLayout [
 
-	self subclassResponsibility
+		self subclassResponsibility
+
 ]
 
 { #category : #adding }
@@ -95,4 +100,24 @@ RSLayoutAdapter >> layout [
 RSLayoutAdapter >> layout: aLayout [
 
 	self deferredLayout: aLayout 
+]
+
+{ #category : #'instance creation' }
+RSLayoutAdapter >> newInstance: class [
+
+	| instance |
+	instance := class new.
+	self halt.
+
+	customLocation ifTrue: [ 
+		| tree node |
+		tree := RSSingletonData reader.
+		RSSingletonData reader: tree.
+		node := tree node.
+		instance
+			paint: node color;
+			extent: node size;
+			info: node
+		"aWidget translateBy: node allocation." ].
+	instance customLocation: customLocation
 ]

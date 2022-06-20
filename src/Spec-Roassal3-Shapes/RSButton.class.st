@@ -9,16 +9,22 @@ Class {
 
 { #category : #building }
 RSButton >> build [
+
 	| group |
 	group := RSGroup new.
 	group add: self label.
-	(info path isNotNil and: [info path isNotEmpty and: [ info path asFileReference exists ]]) ifTrue: [ group add: self getImage ].
+	info ifNotNil: [ 
+		(info path isNotNil and: [ 
+			 info path isNotEmpty and: [ info path asFileReference exists ] ]) 
+			ifTrue: [ group add: self getImage ] ].
+
 	"RSVerticalLineLayout on: group."
-	self 
-	addAll: group;
-	translateBy: self extent / 2;
-	border: (RSBorder new width: 0.5; color: Color black)";
-	@ (RSHighlightable color: self defaultColor darker)"
+	self
+		addAll: group;
+		translateBy: self extent / 2;
+		border: (RSBorder new
+				 width: 0.5;
+				 color: Color black)
 ]
 
 { #category : #adding }
@@ -29,7 +35,10 @@ RSButton >> getImage [
 
 { #category : #adding }
 RSButton >> label [
-	^ RSLabel new color: info fontColor; text: text
+
+	^ RSLabel new
+		  color: (info ifNil: [ Color black ] ifNotNil: [ info fontColor ]);
+		  text: text
 ]
 
 { #category : #geometry }

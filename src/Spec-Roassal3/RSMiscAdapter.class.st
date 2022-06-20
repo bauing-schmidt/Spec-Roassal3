@@ -17,8 +17,9 @@ RSMiscAdapter >> addModelTo: rsWidget [
 		node := tree node.
 		"assoc := RSAdapter widgetData nextOrNil.
 		assoc ifNotNil: [ rsWidget translateBy: assoc key origin ]" 
-		rsWidget translateBy: node allocation
-	].
+		rsWidget
+			translateBy: node allocation;
+			extent: node size.].
 	rsWidget customLocation: customLocation.
 ]
 

@@ -12,11 +12,18 @@ Class {
 
 { #category : #adding }
 RSWindowAdapter >> addGroup: group toCanvas: canvas [
+
 	"group first nodes do: [ :e | canvas addFixedShape: e ]."
-	customLocation 
-		ifTrue: [ group do: [:e | e addOn: canvas ] ]
-		ifFalse: [ RSVerticalLineLayout on: group.
+
+	"canvas container: group."
+
+	customLocation
+		ifTrue: [ group do: [ :e | e addOn: canvas ] ]
+		ifFalse: [ 
+			RSVerticalLineLayout on: group.
 			canvas addAll: group ]
+
+	"group translateBy: 0@0."
 ]
 
 { #category : #adding }
@@ -44,14 +51,17 @@ RSWindowAdapter >> deferredAddPresenterIn: canvas withSpecLayout: aSpec [
 			canvas extent: extent ].
 	self presenter initialPosition
 		ifNotNil: [ :position | self halt. canvas moveTo: position ].
+	"canvas extent: 400@373."
+	"canvas translateBy: 0@0."
 	"canvas decorated: self presenter hasDecorations."
 	"self subscribeDecorations."
 	
 	"inner contents of window"
 	contentGroup := RSGroup new.
+	"canvas container: contentGroup .
+		self halt."
 	self populateContent: contentGroup spec: aSpec window: canvas.
 	"contentBox open."
-
 	self addGroup: contentGroup toCanvas: canvas
 ]
 

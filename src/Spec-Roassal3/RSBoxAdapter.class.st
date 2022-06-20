@@ -39,11 +39,13 @@ RSBoxAdapter >> addWidgetAlignment: constraints to: rsWidget [
 RSBoxAdapter >> applyLayout: aLayout [
 
 	"build of widget was differed up to here (to know what is the direction)"
-	widget := RSBoxWidget new.
-	widget direction: aLayout direction. 
+
+	widget := self newInstance: RSBoxWidget.
+	widget direction: aLayout direction.
+	self halt.
 	"self connectToEvents: aLayout. "
 
-	widget 
+	widget
 		homogeneous: aLayout isHomogeneous;
 		spacing: aLayout spacing;
 		borderWidth: aLayout borderWidth
@@ -51,8 +53,7 @@ RSBoxAdapter >> applyLayout: aLayout [
 
 { #category : #adding }
 RSBoxAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
-
-	| childWidget |
+| childWidget |
 	childWidget := aPresenter buildWithSelector: constraints spec.
 	"self addConstraints: constraints toChild: childWidget."
 	constraints isPlacedAtStart
