@@ -105,6 +105,7 @@ RSWindowAdapter >> populateContent: group spec: aSpec window: roassalWindow [
 		RSSingletonData reader: tree.
 		node := tree node.
 		tree := node children second.
+		RSSingletonData containerPosition: node allocation.
 		RSSingletonData reader: tree ].
 
 	"menu bar"

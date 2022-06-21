@@ -26,8 +26,9 @@ RSFrame >> build [
 			aux2 x negated @ (aux2 y + labelWidget extent y) negated ].
 	self addAll: (list collect: [ :element | 
 			 element
-				 position: self position;
+				 position: 0@0;
 				 yourself ]).
+	self position: self position - RSSingletonData containerPosition.
 	self withBorder
 ]
 
