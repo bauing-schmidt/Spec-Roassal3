@@ -32,7 +32,7 @@ RSLayoutAdapter >> add: aPresenter constraints: constraints [
 RSLayoutAdapter >> addModelTo: aWidget [
 
 	super addModelTo: aWidget.
-	aWidget build.
+	"aWidget build"
 	"customLocation ifTrue: [ RSAdapter widgetData nextOrNil ]."
 	"customLocation ifTrue: [ 
 		| tree node |
@@ -81,6 +81,8 @@ RSLayoutAdapter >> buildWidget [
 RSLayoutAdapter >> buildWithSelector: aSelector [
 
 	^ self build
+
+	
 ]
 
 { #category : #private }

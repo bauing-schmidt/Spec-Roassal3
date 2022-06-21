@@ -21,10 +21,10 @@ RSButton >> build [
 	"RSVerticalLineLayout on: group."
 	self
 		addAll: group;
-		"translateBy: self extent / 2;"
-		border: (RSBorder new
+		"translateBy: self extent / 2;"border: (RSBorder new
 				 width: 0.5;
-				 color: Color black)
+				 color: Color black);
+		translateBy: self extent / 2
 ]
 
 { #category : #adding }

@@ -19,36 +19,19 @@ RSBoxWidget >> build [
 
 	"self translateBy: -10@20.""self position: (self extent x) negated@ (self extent y) negated."
 
-	self addAll: (elements collect: [ :element | 
-			 element class == self class
+	self addAll:
+		(elements collect: [ :element | "element class == self class"
+			 (element isKindOf: RSContainer)
 				 ifTrue: [ 
-					 element color: Color red.
-					 element position: element position - self position ]
+					 "self halt."
+					 "element totalPosition: self totalPosition."
+					 "element position: element position - self position"
+					 element translateBy:
+						 element extent / 2 - (self extent / 2) - self position ]
 				 ifFalse: [ "self halt." 
 					 element position:
 						 element position - (self extent / 2) - self position ].
 			 element ]).
-	"element position:
-				 element position - (self extent / 2) - self position ])"
-
-	self color: Color yellow
-
-	"self addAll: elements"
-	"self add: (elements first position:
-			 (self extent x / 2 - (elements first position x / 2)) negated
-			 @ (self extent y / 2 negated + (elements first position y / 2)))."
-
-	"aux := self extent.
-	aux2 := aux x / 2 @ (aux y / 2).
-	self translateBy: aux2"
-	"self position: self extent / 2 + self position / 2"
-
-	"customLocation
-		ifTrue: [ self addAll: elements ]
-		ifFalse: [ 
-			lineLayout ifNil: [ lineLayout := self defaultLineLayout ].
-			lineLayout on: elements.
-			self shapes: elements ]"
 ]
 
 { #category : #'as yet unclassified' }
