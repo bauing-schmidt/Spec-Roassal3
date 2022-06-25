@@ -18,6 +18,12 @@ RSWidget >> build [
 	self subclassResponsibility  
 ]
 
+{ #category : #signaling }
+RSWidget >> connectDestroy: aBlock [
+
+	"(GDestroyCallback do: [ :widget :aData | aBlock value ]) connectTo: self"
+]
+
 { #category : #accessing }
 RSWidget >> customLocation [
 
@@ -26,7 +32,7 @@ RSWidget >> customLocation [
 
 { #category : #accessing }
 RSWidget >> customLocation: anObject [
-
+	
 	customLocation := anObject
 ]
 
@@ -40,6 +46,11 @@ RSWidget >> data [
 RSWidget >> data: anObject [
 
 	data := anObject
+]
+
+{ #category : #geometry }
+RSWidget >> hExpand: boolean [
+	
 ]
 
 { #category : #initialization }

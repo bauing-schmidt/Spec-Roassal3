@@ -10,19 +10,36 @@ Class {
 
 { #category : #adding }
 RSTreeTableAdapter >> addModelTo: rsTreeView [
+
 	super addModelTo: rsTreeView.
 	
+	customLocation
+		ifTrue: [ 
+			| tree node |
+			tree := RSSingletonData reader.
+			RSSingletonData reader: tree.
+			node := tree node.
+			"assoc := RSAdapter widgetData nextOrNil.
+		assoc ifNotNil: [ rsWidget extent: assoc value.
+		rsWidget translateBy: assoc key origin ]"
+			rsTreeView 
+				extent: node size;
+				translateBy: node allocation;
+				color: node color ]
+		ifFalse: [ rsTreeView extent: rsTreeView preferredSizeMinimum ].
+	rsTreeView customLocation: customLocation.
+
 	rsTreeView headersVisible: self presenter isShowingColumnHeaders.
-	rsTreeView connectDestroy: [ 
-		rsTreeView model roots: #() ].
+	rsTreeView connectDestroy: [ rsTreeView model roots: #(  ) ].
 
 	self addSearchTo: rsTreeView.
-	
+
 	self recreateStore: rsTreeView generateColumns: true.
 	self configureInitialState: rsTreeView.
 	"self configureDragAndDrop: rsTreeView.
 	self connectToRSSignals: rsTreeView.
 	self connectToSpecEvents: rsTreeView"
+	rsTreeView build
 ]
 
 { #category : #adding }
@@ -85,7 +102,7 @@ RSTreeTableAdapter >> doRecreateColumns: rsTreeView [
 
 	columnBuilder := self newColumnBuilder.
 	columnBuilder view: rsTreeView. 
-
+	self halt.
 	self columns do: [ :each | columnBuilder visit: each ]
 ]
 
@@ -118,7 +135,7 @@ RSTreeTableAdapter >> makeSortableColumn: rsColumn model: aTableColumn [
 
 { #category : #building }
 RSTreeTableAdapter >> newColumnBuilder [
-
+	self halt.
 	^ RSTreeTableColumnBuilder new 
 		model: self presenter;
 		columns: self columns;
@@ -129,6 +146,7 @@ RSTreeTableAdapter >> newColumnBuilder [
 RSTreeTableAdapter >> newTreeStoreFrom: items [
 	| store |
 	store := RSTreeDataStore new.
+	self halt.
 	RSTableDataStoreColumnCollector new 
 		store: store;
 		visitAll: self columns.
@@ -184,19 +202,21 @@ RSTreeTableAdapter >> widgetClass [
 
 { #category : #building }
 RSTreeTableAdapter >> wrapWidget: rsWidget [
-	| wrapWidget |
+
+	"| wrapWidget |"
 	innerWidget := rsWidget.
 	self model hasScrollBars ifFalse: [ ^ super wrapWidget: rsWidget ].
-	wrapWidget := self wrapWithScrollableWindow: innerWidget.
-	
-	wrapWidget 
+	"wrapWidget := self wrapWithScrollableWindow: innerWidget.
+
+	wrapWidget
 		propagateNaturalWidth: self presenter isPropagateNaturalWidth;
-		propagateNaturalHeight: self presenter isPropagateNaturalHeight.
-		
-	self presenter scrollBarStyles ifNotNil: [ :styles |
-		styles do: [ :each | wrapWidget addClass: each ] ].
-	
-	^ wrapWidget
+		propagateNaturalHeight: self presenter isPropagateNaturalHeight."
+
+	self presenter scrollBarStyles ifNotNil: [ :styles | 
+		styles do: [ :each | innerWidget addClass: each ] ].
+
+	"^ wrapWidget"
+	^ innerWidget 
 ]
 
 { #category : #building }

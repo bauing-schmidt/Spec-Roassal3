@@ -11,7 +11,6 @@ Class {
 RSButton >> build [
 	self 
 	add: self label;
-	color: self defaultColor;
 	"extent: self extent;"
 	translateBy: self extent / 2;
 	border: (RSBorder new width: 0.5; color: Color black)";
@@ -26,7 +25,7 @@ RSButton >> defaultColor [
 { #category : #'as yet unclassified' }
 RSButton >> defaultColorLabel [
 
-	^ Color white
+	^ Color black
 ]
 
 { #category : #adding }

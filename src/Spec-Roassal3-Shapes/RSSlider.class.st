@@ -31,7 +31,7 @@ RSSlider class >> newVerticalMin: min max: max step: step [
 
 { #category : #'accessing - token' }
 RSSlider >> bar [
-	^ RSBox new color: Color black; extent: self extent x@4
+	^ RSBox new color: self color; extent: self extent x@4
 ]
 
 { #category : #building }
@@ -41,6 +41,7 @@ RSSlider >> build [
 	ellipse := self ellipse.
 	shapes add: ellipse.
 	bar := self bar.
+	self color: Color white.
 	bar translateBy: ((bar extent x / 2)@(ellipse radius)).
 	self add: bar.
 	orientation ifNil: [ orientation := self defaultOrientation ].
@@ -56,7 +57,7 @@ RSSlider >> defaultOrientation [
 
 { #category : #shapes }
 RSSlider >> ellipse [ 
-	^ RSEllipse new radius: self extent y / 4
+	^ RSEllipse new color: self color; radius: self extent y / 4
 ]
 
 { #category : #accessing }

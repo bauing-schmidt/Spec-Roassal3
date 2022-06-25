@@ -47,15 +47,15 @@ RSTableColumnPacker >> columnIndexOf: aTableColumn [
 ]
 
 { #category : #accessing }
-RSTableColumnPacker >> expand [
-
-	^ expand
-]
-
-{ #category : #accessing }
 RSTableColumnPacker >> expand: anObject [
 
 	expand := anObject
+]
+
+{ #category : #accessing }
+RSTableColumnPacker >> isExpand [
+
+	^ expand
 ]
 
 { #category : #visiting }
