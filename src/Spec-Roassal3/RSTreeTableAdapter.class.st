@@ -36,9 +36,9 @@ RSTreeTableAdapter >> addModelTo: rsTreeView [
 
 	self recreateStore: rsTreeView generateColumns: true.
 	self configureInitialState: rsTreeView.
-	"self configureDragAndDrop: rsTreeView.
-	self connectToRSSignals: rsTreeView.
-	self connectToSpecEvents: rsTreeView"
+	"self configureDragAndDrop: rsTreeView."
+	self connectToRoassalSignals: rsTreeView.
+	self connectToSpecEvents: rsTreeView.
 	rsTreeView build
 ]
 
@@ -85,6 +85,18 @@ RSTreeTableAdapter >> configureInitialState: rsWidget [
 	
 	"self presenter contextMenu ifNotNil: [ :menu |
 		self addMenu: menu to: rsWidget ]"
+]
+
+{ #category : #building }
+RSTreeTableAdapter >> connectToSpecEvents: gtkWidget [
+
+	self presenter 
+		whenShowColumnHeadersChangedDo: [ self updateColumnHeaders ];
+		whenMultiSelectionChangedDo: [ self updateMultiSelection ];
+		whenSelectionChangedDo: [ self updateSelection ];
+		whenRootsChangedDo: [ self updateRoots ].
+
+	self connectToSpecColumnsChangedEventTo: gtkWidget
 ]
 
 { #category : #accessing }
@@ -186,6 +198,22 @@ RSTreeTableAdapter >> selectItemIn: rsWidget path: aPath [
 
 	(rsWidget selection isSelected: aPath)
 		ifFalse: [ rsWidget selection unselectAll ].
+]
+
+{ #category : #'private updating' }
+RSTreeTableAdapter >> updateColumnHeaders [
+
+	self innerWidgetDo: [ :w |
+		w headersVisible: self presenter isShowingColumnHeaders ]
+]
+
+{ #category : #'private updating' }
+RSTreeTableAdapter >> updateMultiSelection [
+	
+	self innerWidgetDo: [ :w | 
+		self presenter selection isMultipleSelection 
+			ifTrue: [ w beMultipleSelectionMode ]
+			ifFalse: [ w beSingleSelectionMode ] ]
 ]
 
 { #category : #building }

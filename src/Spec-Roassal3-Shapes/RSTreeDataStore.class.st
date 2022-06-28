@@ -41,6 +41,15 @@ RSTreeDataStore >> indexOf: aTableColumn [
 ]
 
 { #category : #accessing }
+RSTreeDataStore >> indexOf: aTableColumn tag: anObject [
+
+	"Answer the 'pure' column (the one that does not defines an attribute)"
+
+	^ self indexOfColumnSuchAs: [ :aColumn | 
+		  aColumn column = aTableColumn and: [ aColumn tag = anObject ] ]
+]
+
+{ #category : #accessing }
 RSTreeDataStore >> indexOfColumnSuchAs: aBlock [
 
 	columns withIndexDo: [ :each :index |

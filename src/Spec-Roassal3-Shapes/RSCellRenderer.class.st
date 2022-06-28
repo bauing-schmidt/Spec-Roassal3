@@ -8,6 +8,11 @@ Class {
 	#category : #'Spec-Roassal3-Shapes-Widget-CellRenderers'
 }
 
+{ #category : #adding }
+RSCellRenderer >> addAttribute: string with: object [
+	dictionary at: string put: object 
+]
+
 { #category : #accessing }
 RSCellRenderer >> expand [
 
@@ -18,6 +23,11 @@ RSCellRenderer >> expand [
 RSCellRenderer >> expand: anObject [
 
 	expand := anObject
+]
+
+{ #category : #initialization }
+RSCellRenderer >> initialize [ 
+	dictionary := Dictionary new
 ]
 
 { #category : #accessing }

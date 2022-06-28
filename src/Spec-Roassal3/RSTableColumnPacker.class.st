@@ -47,6 +47,12 @@ RSTableColumnPacker >> columnIndexOf: aTableColumn [
 ]
 
 { #category : #accessing }
+RSTableColumnPacker >> columnIndexOf: aTableColumn tag: anObject [
+
+	^ (self store indexOf: aTableColumn tag: anObject) - 1
+]
+
+{ #category : #accessing }
 RSTableColumnPacker >> expand: anObject [
 
 	expand := anObject
