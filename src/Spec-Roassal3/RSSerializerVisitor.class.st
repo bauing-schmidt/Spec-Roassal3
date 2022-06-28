@@ -73,16 +73,16 @@ RSSerializerVisitor >> serialize: presenter on: string given: path [
 
 { #category : #visiting }
 RSSerializerVisitor >> visitButton: widget [
+
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
-						mapping
-							mapAccessor: #className;
-							mapAccessor: #allocation;
-							mapAccessor: #size;
-							mapAccessor: #styleContext;
-							mapAccessor: #getImage.						
-				]. 
+		mapping
+			mapAccessor: #className;
+			mapAccessor: #allocation;
+			mapAccessor: #size;
+			mapAccessor: #styleContext;
+			mapAccessor: #getImage ].
 	mappingDictionary := dict
 ]
 
@@ -113,6 +113,7 @@ RSSerializerVisitor >> visitInfoArea: widget [
 
 { #category : #visiting }
 RSSerializerVisitor >> visitWidget: widget [
+
 	| dict |
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 

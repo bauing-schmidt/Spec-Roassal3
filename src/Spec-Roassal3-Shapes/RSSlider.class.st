@@ -47,6 +47,8 @@ RSSlider >> build [
 	orientation gapSize: 0;
 	on: shapes.
 	self addAll: shapes.  
+	shapes translateBy: 0@((self extent y/2) - (shapes extent y/2)).
+	bar translateBy: 0@((self extent y/2) - (shapes extent y/2)).
 ]
 
 { #category : #accessing }

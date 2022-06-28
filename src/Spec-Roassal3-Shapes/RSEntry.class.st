@@ -17,25 +17,26 @@ RSEntry >> bePassword [
 { #category : #building }
 RSEntry >> build [
 
-	"self add: (self input translateBy: self extent/2)"
-
-	"	self halt."
-
+	| initialPointForLabel labelPadding |
+	labelPadding := 8.
+	initialPointForLabel := (self extent x / 2 - labelPadding) negated
+	                        @ (self label extent y / 2) negated.
 	self
-		add: self label;
-		"color: Color white;""extent: self extent;"translateBy:
-			self extent / 2;
-			withBorder
+		add: (self label translateTopLeftTo: initialPointForLabel);
+		translateBy: self extent / 2;
+		withBorder
 ]
 
 { #category : #'as yet unclassified' }
 RSEntry >> getColor [
+
 	^ (text isNil or: [ text isEmpty ])
-		ifTrue: [ 
-			(placeholder isNil or: [ placeholder isEmpty ]) 
-				ifTrue: [ Color black ]
-				ifFalse: [ Color gray ] ]
-		ifFalse: [ Color black ]
+		  ifTrue: [ 
+			  (placeholder isNil or: [ placeholder isEmpty ])
+				  ifTrue: [ Color black ]
+				  ifFalse: [ Color gray ] ]
+		  ifFalse: [ 
+		  info ifNil: [ Color black ] ifNotNil: [ info fontColor ] ]
 ]
 
 { #category : #accessing }
@@ -58,10 +59,12 @@ RSEntry >> initialize [
 
 { #category : #building }
 RSEntry >> input [
-	^ RSBox new extent: self extent; 
-		color: Color white; 
-		withBorder; 
-		yourself
+
+	^ RSBox new
+		  extent: self extent;
+		  color: Color white;
+		  withBorder;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -69,9 +72,7 @@ RSEntry >> label [
 
 	^ RSLabel new
 		  color: self getColor;
-		  text: self getText ";;
-		translateBy: 0@0";
-		extent: 30@60
+		  text: self getText
 ]
 
 { #category : #accessing }

@@ -22,7 +22,8 @@ RSMiscAdapter >> addModelTo: rsWidget [
 		assoc ifNotNil: [ rsWidget translateBy: assoc key origin ]"
 		rsWidget
 			position: node allocation;
-			extent: node size
+			extent: node size;
+			info: node
 		"translateBy: node allocation;" ].
 	rsWidget customLocation: customLocation
 ]
