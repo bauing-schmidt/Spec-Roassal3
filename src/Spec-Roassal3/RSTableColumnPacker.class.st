@@ -4,7 +4,11 @@ Class {
 	#instVars : [
 		'column',
 		'builder',
-		'expand'
+		'expand',
+		'listItems',
+		'currentRoot',
+		'level',
+		'bodyColumn'
 	],
 	#category : #'Spec-Roassal3-Adapter-Table'
 }
@@ -26,6 +30,12 @@ RSTableColumnPacker >> builder [
 RSTableColumnPacker >> builder: anObject [
 
 	builder := anObject
+]
+
+{ #category : #'as yet unclassified' }
+RSTableColumnPacker >> builderShape [
+
+	^ bodyColumn build
 ]
 
 { #category : #accessing }
@@ -53,9 +63,36 @@ RSTableColumnPacker >> columnIndexOf: aTableColumn tag: anObject [
 ]
 
 { #category : #accessing }
+RSTableColumnPacker >> columnOfStore: aTableColumn [
+
+	^ self store column: aTableColumn
+]
+
+{ #category : #'as yet unclassified' }
+RSTableColumnPacker >> columnShape [
+
+	^ RSTreeViewColumn new
+		  image:
+			  (listItems
+				   at: 'image'
+				   ifAbsent: [ nil ]);
+		  title: (listItems at: 'title' ifAbsent: [ '' ]);
+		  leafLevel: level;
+		  build
+]
+
+{ #category : #accessing }
 RSTableColumnPacker >> expand: anObject [
 
 	expand := anObject
+]
+
+{ #category : #initialization }
+RSTableColumnPacker >> initialize [
+
+	super initialize.
+	listItems := Dictionary new.
+	bodyColumn := RSBodyColumn new
 ]
 
 { #category : #accessing }
@@ -88,54 +125,56 @@ RSTableColumnPacker >> visit: aTableColumn [
 ]
 
 { #category : #visiting }
-RSTableColumnPacker >> visitImageColumn: aTableColumn [
-	| renderer |
+RSTableColumnPacker >> visit: aTableColumn givenRoots: roots and: integer [
 
-	renderer := self newImageRenderer.
-	self addRendererPropertiesTo: renderer column: aTableColumn.
-	column packStart: renderer expand: self isExpand.
-	column 
-		addAttribute: 'pixbuf' 
-		column: (self columnIndexOf: aTableColumn)
-		renderer: renderer
+	| childrenBlock |
+	childrenBlock := self store childrenBlock.
+	roots do: [ :root | 
+		currentRoot := root.
+		level := integer.
+		self visit: aTableColumn.
+		bodyColumn addRow: self columnShape.
+		listItems := Dictionary new.
+		childrenBlock ifNotNil: [ 
+			self
+				visit: aTableColumn
+				givenRoots: (childrenBlock value: root)
+				and: integer + 1 ] ]
+]
+
+{ #category : #visiting }
+RSTableColumnPacker >> visitCompositeColumn: aTableColumn [
+
+	aTableColumn columns do: [ :each |
+		self visit: each ]
+]
+
+{ #category : #visiting }
+RSTableColumnPacker >> visitImageColumn: aTableColumn [
+
+	| storeColumn icon |
+	currentRoot 
+		ifNotNil: [
+			storeColumn := self columnOfStore: aTableColumn.
+	icon := currentRoot  perform: storeColumn evaluated.
+	listItems at: 'image' put: icon  ]
+	
+]
+
+{ #category : #visiting }
+RSTableColumnPacker >> visitIteratively: aTableColumn [
+
+	self visit: aTableColumn givenRoots: self store roots and: 1
 ]
 
 { #category : #visiting }
 RSTableColumnPacker >> visitStringColumn: aTableColumn [
-	| renderer index |
+
+	| storeColumn string |
+	currentRoot 
+		ifNotNil: [ 
+			storeColumn := self columnOfStore: aTableColumn.
+	string := storeColumn evaluated cull: currentRoot .
+	listItems at: 'title' put: string ]
 	
-	renderer := aTableColumn isEditable 
-		ifTrue: [ self newEditableTextRendererFor: aTableColumn ]
-		ifFalse: [ self newTextRenderer ].
-	self addRendererPropertiesTo: renderer column: aTableColumn.
-	
-	index := self columnIndexOf: aTableColumn.
-	column packStart: renderer expand: self isExpand.
-	column addAttribute: 'text' column: index renderer: renderer.
-	"Add properties."
-	aTableColumn displayColor ifNotNil: [ 
-		column 
-			addAttribute: 'foreground' 
-			column: (self columnIndexOf: aTableColumn tag: #foreground) 
-			renderer: renderer ].	
-	aTableColumn displayBackgroundColor ifNotNil: [
-		column 
-			addAttribute: 'background'
-			column: (self columnIndexOf: aTableColumn tag: #background) 
-			renderer: renderer ].
-	aTableColumn displayItalic ifNotNil: [  
-		column 
-			addAttribute: 'style'
-			column: (self columnIndexOf: aTableColumn tag: #style) 
-			renderer: renderer ].
-	aTableColumn displayBold ifNotNil: [  
-		column 
-			addAttribute: 'weight'
-			column: (self columnIndexOf: aTableColumn tag: #weight) 
-			renderer: renderer ].
-	aTableColumn displayBold ifNotNil: [  
-		column 
-			addAttribute: 'underline'
-			column: (self columnIndexOf: aTableColumn tag: #underline) 
-			renderer: renderer ].	
 ]

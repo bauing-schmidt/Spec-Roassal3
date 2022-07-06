@@ -12,33 +12,23 @@ Class {
 RSTreeTableAdapter >> addModelTo: rsTreeView [
 
 	super addModelTo: rsTreeView.
-	
+
 	customLocation
 		ifTrue: [ 
 			| tree node |
 			tree := RSSingletonData reader.
 			RSSingletonData reader: tree.
 			node := tree node.
-			"assoc := RSAdapter widgetData nextOrNil.
-		assoc ifNotNil: [ rsWidget extent: assoc value.
-		rsWidget translateBy: assoc key origin ]"
-			rsTreeView 
+			rsTreeView
 				extent: node size;
 				translateBy: node allocation;
 				color: node color ]
 		ifFalse: [ rsTreeView extent: rsTreeView preferredSizeMinimum ].
 	rsTreeView customLocation: customLocation.
-
 	rsTreeView headersVisible: self presenter isShowingColumnHeaders.
 	rsTreeView connectDestroy: [ rsTreeView model roots: #(  ) ].
-
 	self addSearchTo: rsTreeView.
-
 	self recreateStore: rsTreeView generateColumns: true.
-	self configureInitialState: rsTreeView.
-	"self configureDragAndDrop: rsTreeView."
-	self connectToRoassalSignals: rsTreeView.
-	self connectToSpecEvents: rsTreeView.
 	rsTreeView build
 ]
 
@@ -53,15 +43,6 @@ RSTreeTableAdapter >> addSearchTo: rsTreeView [
 			self presenter 
 				performSearch: (self presenter itemAtPath: iter toPathArray) 
 				matching: key ] ]
-]
-
-{ #category : #building }
-RSTreeTableAdapter >> addSortableColumnsTo: rsTreeView [
-	self columns withIndexDo: [ :each :index |
-		each isSortable ifTrue: [ 
-			self 
-				makeSortableColumn: (rsTreeView columns at: index) 
-				model: each ] ]
 ]
 
 { #category : #accessing }
@@ -87,18 +68,6 @@ RSTreeTableAdapter >> configureInitialState: rsWidget [
 		self addMenu: menu to: rsWidget ]"
 ]
 
-{ #category : #building }
-RSTreeTableAdapter >> connectToSpecEvents: gtkWidget [
-
-	self presenter 
-		whenShowColumnHeadersChangedDo: [ self updateColumnHeaders ];
-		whenMultiSelectionChangedDo: [ self updateMultiSelection ];
-		whenSelectionChangedDo: [ self updateSelection ];
-		whenRootsChangedDo: [ self updateRoots ].
-
-	self connectToSpecColumnsChangedEventTo: gtkWidget
-]
-
 { #category : #accessing }
 RSTreeTableAdapter >> defaultColumn [
 			
@@ -114,7 +83,6 @@ RSTreeTableAdapter >> doRecreateColumns: rsTreeView [
 
 	columnBuilder := self newColumnBuilder.
 	columnBuilder view: rsTreeView. 
-	self halt.
 	self columns do: [ :each | columnBuilder visit: each ]
 ]
 
@@ -135,54 +103,32 @@ RSTreeTableAdapter >> items [
 ]
 
 { #category : #building }
-RSTreeTableAdapter >> makeSortableColumn: rsColumn model: aTableColumn [
-	| id |
-
-	id := self columns indexOf: aTableColumn.
-	"rsColumn
-		beClickable;
-		disconnect: GClickedCallback signalName;
-		connectClicked: [ self toggleSort: rsColumn model: aTableColumn ]"
-]
-
-{ #category : #building }
 RSTreeTableAdapter >> newColumnBuilder [
-	self halt.
-	^ RSTreeTableColumnBuilder new 
-		model: self presenter;
-		columns: self columns;
-		yourself
+
+	^ RSTreeTableColumnBuilder new
+		  model: self presenter;
+		  columns: self columns;
+		  yourself
 ]
 
 { #category : #building }
 RSTreeTableAdapter >> newTreeStoreFrom: items [
+
 	| store |
 	store := RSTreeDataStore new.
-	self halt.
-	RSTableDataStoreColumnCollector new 
+	RSTableDataStoreColumnCollector new
 		store: store;
 		visitAll: self columns.
-		
 	store roots: items.
 	store children: self presenter children.
-	
-	"configure drag&drop"
-	store dragEnabled: self presenter dragEnabled.
-	self presenter dropEnabled ifTrue: [ 
-		store 
-			dropEnabled: true;
-			acceptDrop: self presenter acceptDrop ].	
-
 	^ store
 ]
 
 { #category : #building }
-RSTreeTableAdapter >> recreateStore: rsTreeView	generateColumns: doesGenerateColumns [
+RSTreeTableAdapter >> recreateStore: rsTreeView generateColumns: doesGenerateColumns [
 
-	self doRecreateStore: rsTreeView.	
-	doesGenerateColumns 
-		ifTrue: [ self doRecreateColumns: rsTreeView ].
-	self addSortableColumnsTo: rsTreeView
+	self doRecreateStore: rsTreeView.
+	doesGenerateColumns ifTrue: [ self doRecreateColumns: rsTreeView ]
 ]
 
 { #category : #building }
@@ -231,26 +177,9 @@ RSTreeTableAdapter >> widgetClass [
 { #category : #building }
 RSTreeTableAdapter >> wrapWidget: rsWidget [
 
-	"| wrapWidget |"
 	innerWidget := rsWidget.
 	self model hasScrollBars ifFalse: [ ^ super wrapWidget: rsWidget ].
-	"wrapWidget := self wrapWithScrollableWindow: innerWidget.
-
-	wrapWidget
-		propagateNaturalWidth: self presenter isPropagateNaturalWidth;
-		propagateNaturalHeight: self presenter isPropagateNaturalHeight."
-
 	self presenter scrollBarStyles ifNotNil: [ :styles | 
 		styles do: [ :each | innerWidget addClass: each ] ].
-
-	"^ wrapWidget"
-	^ innerWidget 
-]
-
-{ #category : #building }
-RSTreeTableAdapter >> wrapWithScrollableWindow: rsWidget [
-	"^ (GtkScrolledWindow newWidget: gtkWidget)
-		show;
-		yourself"
-	
+	^ innerWidget
 ]

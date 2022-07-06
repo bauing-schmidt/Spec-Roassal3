@@ -7,7 +7,9 @@ Class {
 		'resizable',
 		'renderers',
 		'width',
-		'sizing'
+		'sizing',
+		'image',
+		'leafLevel'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget-Tree'
 }
@@ -31,19 +33,47 @@ RSTreeViewColumn >> beSizingFixed [
 { #category : #building }
 RSTreeViewColumn >> build [
 
-	| label |
+	| label cellImage group |
+	cellImage := self imageToDraw.
 	label := self label.
-	self
-		extent: label textWidth @ 20;
-		add: label;
-		"translateBy: self extent / 2;"withBorder
+	self extent: self label textWidth @ 20.
+	group := RSGroup new.
+	cellImage ifNotNil: [ group add: cellImage ].
+	group add: label.
+	RSHorizontalLineLayout on: group.
+	self shapes: group.
+	"translateBy: self extent / 2;"
+	"self withBorder"
+]
+
+{ #category : #accessing }
+RSTreeViewColumn >> image [
+
+	^image
+]
+
+{ #category : #accessing }
+RSTreeViewColumn >> image: imageCell [
+	image := imageCell
+]
+
+{ #category : #'as yet unclassified' }
+RSTreeViewColumn >> imageToDraw [
+
+	^ image ifNotNil: [  
+	RSBitmap new
+		  form: image;
+		  yourself ]
+	ifNil: [ nil ]
 ]
 
 { #category : #initialization }
-RSTreeViewColumn >> initialize [ 
+RSTreeViewColumn >> initialize [
+
 	super initialize.
 	self beSizingFixed.
-	renderers := OrderedCollection new
+	renderers := OrderedCollection new.
+	title := ''
 ]
 
 { #category : #accessing }
@@ -51,6 +81,11 @@ RSTreeViewColumn >> label [
 	^ RSLabel new
 		  color: Color black;
 		  text: title
+]
+
+{ #category : #accessing }
+RSTreeViewColumn >> leafLevel: integer [
+	leafLevel := integer
 ]
 
 { #category : #accessing }

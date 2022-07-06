@@ -9,6 +9,18 @@ Class {
 	#category : #'Spec-Roassal3-Adapter-Table'
 }
 
+{ #category : #visiting }
+RSTableColumnBuilder >> addToView: column and: body [
+
+	| columnShape |
+	columnShape := RSColumn new.
+	columnShape
+		header: column;
+		body: body;
+		build.
+	self view appendColumn: columnShape
+]
+
 { #category : #testing }
 RSTableColumnBuilder >> isResizable [
 
@@ -42,11 +54,11 @@ RSTableColumnBuilder >> newColumnFor: aTableColumn [
 { #category : #'instance creation' }
 RSTableColumnBuilder >> newColumnPackerFor: column [
 
-	^ RSTableColumnPacker new 
-		columns: self columns;
-		column: column;
-		builder: self;
-		yourself
+	^ RSTableColumnPacker new
+		  columns: self columns;
+		  column: column;
+		  builder: self;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -70,24 +82,27 @@ RSTableColumnBuilder >> view: anObject [
 { #category : #visiting }
 RSTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 
-	| column packer |
+	| column packer body |
 	column := self newColumnFor: aTableColumn.
 	packer := self newColumnPackerFor: column.
-	self halt.
-	aTableColumn columns do: [ :each | 
-		packer
-			expand: each isExpandable;
-			visit: each ].
+	packer visitIteratively: aTableColumn.
+	body := packer builderShape.
+	self addToView: column and: body
+]
 
-	self view appendColumn: column
+{ #category : #visiting }
+RSTableColumnBuilder >> visitImageColumn: aTableColumn [
+
+	self visitStringColumn: aTableColumn
 ]
 
 { #category : #visiting }
 RSTableColumnBuilder >> visitStringColumn: aTableColumn [
 
-| column |
+	| column bodyColumn packer |
 	column := self newColumnFor: aTableColumn.
-	(self newColumnPackerFor: column) visit: aTableColumn.
-
-	self view appendColumn: column
+	packer := self newColumnPackerFor: column.
+	packer visitIteratively: aTableColumn.
+	bodyColumn := packer builderShape.
+	self addToView: column and: bodyColumn
 ]

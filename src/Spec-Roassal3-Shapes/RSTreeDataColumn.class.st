@@ -32,6 +32,11 @@ RSTreeDataColumn >> column: anObject [
 ]
 
 { #category : #'instance creation' }
+RSTreeDataColumn >> evaluated [
+	^evaluation 	
+]
+
+{ #category : #'instance creation' }
 RSTreeDataColumn >> evaluated: object [
 	evaluation := object 
 ]

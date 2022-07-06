@@ -7,7 +7,8 @@ Class {
 		'wrappedRoots',
 		'childrenBlock',
 		'dragEnabled',
-		'columns'
+		'columns',
+		'pointer'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget-Tree-Store'
 }
@@ -16,13 +17,42 @@ Class {
 RSTreeDataStore >> addColumn: aColumn [
 
 	aColumn store: self.
-	columns add: aColumn
+	pointer add: aColumn
+]
+
+{ #category : #adding }
+RSTreeDataStore >> addCompositeColumn: object [
+
+	pointer := object children.
+	columns add: object
 ]
 
 { #category : #accessing }
 RSTreeDataStore >> children: aBlock [
 
 	childrenBlock := aBlock
+]
+
+{ #category : #accessing }
+RSTreeDataStore >> childrenBlock [ 
+	^ childrenBlock 
+]
+
+{ #category : #accessing }
+RSTreeDataStore >> column: aTableColumn [
+
+	"Answer the 'pure' column (the one that does not defines an attribute)"
+
+	^ self columnSuchAs: [ :aColumn | 
+		  aColumn column = aTableColumn and: [ aColumn tag isNil ] ]
+]
+
+{ #category : #accessing }
+RSTreeDataStore >> columnSuchAs: aBlock [
+
+	^ columns detect: [ :each | aBlock value: each ]
+	ifFound: [ :each | each ]
+	ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -60,15 +90,27 @@ RSTreeDataStore >> indexOfColumnSuchAs: aBlock [
 ]
 
 { #category : #initialization }
-RSTreeDataStore >> initialize [ 
+RSTreeDataStore >> initialize [
+
 	super initialize.
-	columns := OrderedCollection new
+	columns := OrderedCollection new.
+	pointer := columns
 ]
 
 { #category : #accessing }
 RSTreeDataStore >> resetWrappedRoots [
 
 	wrappedRoots := nil
+]
+
+{ #category : #'as yet unclassified' }
+RSTreeDataStore >> restartPointer [ 
+	pointer := columns
+]
+
+{ #category : #accessing }
+RSTreeDataStore >> roots [
+	^roots
 ]
 
 { #category : #accessing }

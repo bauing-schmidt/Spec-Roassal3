@@ -40,7 +40,7 @@ RSTreeView >> beSingleSelectionMode [
 RSTreeView >> build [
 
 	| group |
-	self color: Color green.
+	
 	"extent: 1000 @ 283;"
 	group := RSGroup new.
 	group addAll: columns.

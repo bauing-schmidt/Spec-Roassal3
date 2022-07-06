@@ -75,6 +75,13 @@ RSAdapter >> initialize [
 	customLocation := false
 ]
 
+{ #category : #enumerating }
+RSAdapter >> innerWidgetDo: aBlock [
+
+	self hasWidget ifFalse: [ ^ nil ].
+	^ aBlock value: widget
+]
+
 { #category : #'instance creation' }
 RSAdapter >> newWidget [
 
