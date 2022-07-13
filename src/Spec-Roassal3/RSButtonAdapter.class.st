@@ -6,26 +6,11 @@ Class {
 
 { #category : #adding }
 RSButtonAdapter >> addModelTo: rsButton [
+
 	super addModelTo: rsButton.
-
-	rsButton 
-	text: self getLabelText;
-	build
-	"color: self defaultColor;
-	extent: 100@50;
-	@ (RSHighlightable color: self defaultColor darker)"
-	
-	
-	"self presenter contextMenu ifNotNil: [ :menu |
-		self addMenu: menu to: roassalButton ].
-
-	roassalButton connectClicked: [ 
-		self presenter performAction ]"
-]
-
-{ #category : #initialization }
-RSButtonAdapter >> defaultColor [
-	^ Color gray
+	rsButton
+		text: self getLabelText;
+			build
 ]
 
 { #category : #'instance creation' }

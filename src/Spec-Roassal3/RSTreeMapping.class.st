@@ -30,6 +30,21 @@ RSTreeMapping >> className: string [
 	node className: string
 ]
 
+{ #category : #accessing }
+RSTreeMapping >> getImage: dict [
+	self image: (dict at: 'url')
+]
+
+{ #category : #accessing }
+RSTreeMapping >> image [
+	^ node path
+]
+
+{ #category : #accessing }
+RSTreeMapping >> image: string [
+	node path: string
+]
+
 { #category : #initialization }
 RSTreeMapping >> initialize [
 	node := RSNodeMapping new.
@@ -83,15 +98,8 @@ RSTreeMapping >> size: point [
 	node size: point
 ]
 
-{ #category : #testing }
-RSTreeMapping >> sizeOfChildren [
-	"^ self isLeaf 
-		ifTrue: [ 0 ]
-		ifFalse: [ (dictionary at: #children) size ]"
-	^ node childrenSize
-]
-
 { #category : #accessing }
-RSTreeMapping >> styleContext: string [
-	node color: (Color fromHexString: string)
+RSTreeMapping >> styleContext: aDictionary [
+	node color: (aDictionary at: 'backgroundColor').
+	node fontColor: (aDictionary at: 'fontColor').
 ]

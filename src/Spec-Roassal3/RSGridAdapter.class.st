@@ -4,34 +4,29 @@ Class {
 	#category : #'Spec-Roassal3-Layout-Grid'
 }
 
-{ #category : #adding }
-RSGridAdapter >> addModelTo: rsLayout [
-	super addModelTo: rsLayout.
-	rsLayout build
-]
-
 { #category : #private }
 RSGridAdapter >> applyLayout: aLayout [
-	widget := RSGridWidget new.
+
+	widget := self newInstance: RSBoxWidget
 ]
 
 { #category : #adding }
 RSGridAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
-	| childWidget |
 
+	| childWidget |
 	childWidget := aPresenter buildWithSelector: constraints spec.
 	childWidget data: aPresenter.
-	"self addConstraints: constraints toChild: childWidget."
-	rsWidget 
-		attach: childWidget 
-		at: constraints position 
-		span: constraints span.
-		
+	rsWidget
+		packStart: childWidget
+		expand: true
+		fill: true
+		padding: 0.
+
 	^ rsWidget
 ]
 
 { #category : #building }
 RSGridAdapter >> widgetClass [
 
-	^ RSGridWidget
+	^ RSBoxWidget 
 ]
