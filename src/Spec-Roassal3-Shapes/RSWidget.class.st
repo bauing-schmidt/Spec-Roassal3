@@ -12,7 +12,6 @@ Class {
 { #category : #adding }
 RSWidget >> addOn: canvas [
 
-"	canvas addFixedShape: self"
 	canvas add: self
 ]
 

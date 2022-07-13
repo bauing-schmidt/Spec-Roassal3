@@ -17,34 +17,15 @@ RSLayoutAdapter >> adapterWasBuilt [
 
 { #category : #adding }
 RSLayoutAdapter >> add: aPresenter constraints: constraints [
-	
-	aPresenter owner: self model. 
-	self widgetDo: [ :rsWidget | | childWidget |
-		childWidget := self 
-			basicAdd: aPresenter
-			constraints: constraints 
-			to: rsWidget.
-		self addWidgetAlignment: constraints to: childWidget.
-		"childWidget data: aPresenter" ]
-]
 
-{ #category : #adding }
-RSLayoutAdapter >> addModelTo: aWidget [
-
-	super addModelTo: aWidget.
-	"aWidget build"
-	"customLocation ifTrue: [ RSAdapter widgetData nextOrNil ]."
-	"customLocation ifTrue: [ 
-		| tree node |
-		tree := RSSingletonData reader.
-		RSSingletonData reader: tree.
-		node := tree node.
-		aWidget
-			paint: node color;
-			extent: node size;
-			info: node
-		""aWidget translateBy: node allocation."" ].
-	aWidget customLocation: customLocation"
+	aPresenter owner: self model.
+	self widgetDo: [ :rsWidget | 
+		| childWidget |
+		childWidget := self
+			               basicAdd: aPresenter
+			               constraints: constraints
+			               to: rsWidget.
+		self addWidgetAlignment: constraints to: childWidget ]
 ]
 
 { #category : #adding }
@@ -73,8 +54,6 @@ RSLayoutAdapter >> build [
 RSLayoutAdapter >> buildWidget [
 
 	^ nil
-
-	"^ super buildWidget"
 ]
 
 { #category : #building }
@@ -90,9 +69,6 @@ RSLayoutAdapter >> deferredLayout: aLayout [
 
 	layout := aLayout.
 	self applyLayout: aLayout.
-	"self applyVisibility: widget.
-	self applyStyle: widget.
-	self addKeyBindingsTo: widget."
 	self addEventsTo: widget
 ]
 
@@ -113,19 +89,12 @@ RSLayoutAdapter >> newInstance: class [
 
 	| instance |
 	instance := class new.
-
 	customLocation ifTrue: [ 
 		| tree node |
 		tree := RSSingletonData reader.
 		RSSingletonData reader: tree.
 		node := tree node.
-		self setCustomProperties: node to: instance
-		"instance
-			paint: node color;
-			extent: node size;
-			info: node"
-		"aWidget translateBy: node allocation." ].
-	"instance customLocation: customLocation."
+		self setCustomProperties: node to: instance ].
 	^ instance
 ]
 

@@ -16,11 +16,7 @@ RSSlider class >> newHorizontalMin: min max: max step: step [
 { #category : #'instance creation' }
 RSSlider class >> newOrientation: orientation min: min max: max step: step [
 
-	^ self new
-		orientation: orientation";
-		min: min;
-		max: max;
-		step: step"
+	^ self new orientation: orientation
 ]
 
 { #category : #'instance creation' }

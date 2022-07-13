@@ -8,14 +8,14 @@ Class {
 	#category : #'Spec-Roassal3-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #serializing }
 RSSerializerVisitor >> defaultDataToSerialize [
 
 	^ OrderedDictionary new
 		  at: Point put: [ :mapping | mapping mapAllInstVars ];
-		  at: Rectangle put: [ :mapping | 
-			  (mapping mapInstVar: #origin) valueSchema: Point
-			  "(mapping mapInstVar: #corner) valueSchema: Point" ];
+		  at: Rectangle
+		  put: [ :mapping | 
+			  (mapping mapInstVar: #origin) valueSchema: Point ];
 		  at: Color put: [ :mapping | 
 			  mapping
 				  mapAccessor: #asHexString;
@@ -26,10 +26,9 @@ RSSerializerVisitor >> defaultDataToSerialize [
 		  at: GtkStyleContext put: [ :mapping | 
 		  (mapping mapAccessor: #getBackgroundRGBAColor to: #getRGBAColor) 
 			  valueSchema: GdkRGBA.
-			(mapping mapAccessor: #getActiveRGBAColor)
-			valueSchema: GdkRGBA. ];
+		  (mapping mapAccessor: #getActiveRGBAColor) valueSchema: GdkRGBA ];
 		  at: GdkPixbuf
-		  put: [ :mapping | "mapping mapAccessor: #saveImage to: #url"
+		  put: [ :mapping |
 			  mapping
 				  mapProperty: #url
 				  getter: [ :object | object saveImage: pathImage ]
@@ -93,12 +92,10 @@ RSSerializerVisitor >> visitContainer: widget [
 	dict := self defaultDataToSerialize.
 	dict at: widget class put: [ :mapping | 
 		mapping mapAccessors:
-			#( #className #allocation #size #children #styleContext )
-		"(mapping mapInstVar: #color) valueSchema: Color" ]. "revisar para serializar"
+			#( #className #allocation #size #children #styleContext ) ].
 	widget children do: [ :child | 
 		child accept: self.
-		mappingDictionary ifNotNil: [ dict addAll: mappingDictionary ] 
-	].
+		mappingDictionary ifNotNil: [ dict addAll: mappingDictionary ] ].
 	mappingDictionary := dict
 ]
 
@@ -133,8 +130,7 @@ RSSerializerVisitor >> visitWindow: widget [
 			mapAccessor: #allocation;
 			mapAccessor: #size;
 			mapAccessor: #children;
-			mapAccessor: #styleContext
-		"mapAccessors: #(#className #allocation #size #icon #styleContext))." ].
+			mapAccessor: #styleContext ].
 	widget children do: [ :child | 
 		child accept: self.
 		dict addAll: mappingDictionary ].

@@ -8,12 +8,6 @@ Class {
 RSGridAdapter >> applyLayout: aLayout [
 
 	widget := self newInstance: RSBoxWidget
-	"self connectToEvents: aLayout. "
-
-	"	widget
-		homogeneous: aLayout isHomogeneous;
-		spacing: aLayout spacing;
-		borderWidth: aLayout borderWidth"
 ]
 
 { #category : #adding }
@@ -27,7 +21,6 @@ RSGridAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
 		expand: true
 		fill: true
 		padding: 0.
-	"self addConstraints: constraints toChild: childWidget."
 
 	^ rsWidget
 ]

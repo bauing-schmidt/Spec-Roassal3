@@ -14,8 +14,7 @@ RSLayoutConfiguration >> deserialize [
 	^ (NeoJSONReader on: pathFile asFileReference readStream)
 		  mapInstVarsFor: Point;
 		  for: Rectangle do: [ :mapping | 
-			  (mapping mapInstVar: #origin) valueSchema: Point
-			  "(mapping mapInstVar: #corner) valueSchema: Point" ];
+			  (mapping mapInstVar: #origin) valueSchema: Point ];
 		  for: #Children customDo: [ :mapping | 
 			  mapping
 				  listOfType: OrderedCollection
@@ -25,10 +24,18 @@ RSLayoutConfiguration >> deserialize [
 					  | alphaAux dictionary |
 					  alphaAux := (dict at: #getRGBAColor) at: #asColor.
 					  dictionary := Dictionary new.
-					  dictionary at: 'backgroundColor' put: ((Color fromHexString: (alphaAux at: #asHexString)) alpha: (alphaAux at: #alpha)).
+					  dictionary
+						  at: 'backgroundColor'
+						  put:
+							  ((Color fromHexString: (alphaAux at: #asHexString)) alpha:
+									   (alphaAux at: #alpha)).
 					  alphaAux := (dict at: #getActiveRGBAColor) at: #asColor.
-					  dictionary at: 'fontColor' put: ((Color fromHexString: (alphaAux at: #asHexString)) alpha: (alphaAux at: #alpha)).
-					dictionary ] ];
+					  dictionary
+						  at: 'fontColor'
+						  put:
+							  ((Color fromHexString: (alphaAux at: #asHexString)) alpha:
+									   (alphaAux at: #alpha)).
+					  dictionary ] ];
 		  for: #Image
 		  customDo: [ :mapping | mapping decoder: [ :dict | dict at: #url ] ];
 		  for: #GetImage

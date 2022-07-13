@@ -30,7 +30,7 @@ RSTreeMapping >> className: string [
 	node className: string
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSTreeMapping >> getImage: dict [
 	self image: (dict at: 'url')
 ]
@@ -96,14 +96,6 @@ RSTreeMapping >> read: boolean [
 { #category : #accessing }
 RSTreeMapping >> size: point [
 	node size: point
-]
-
-{ #category : #testing }
-RSTreeMapping >> sizeOfChildren [
-	"^ self isLeaf 
-		ifTrue: [ 0 ]
-		ifFalse: [ (dictionary at: #children) size ]"
-	^ node childrenSize
 ]
 
 { #category : #accessing }

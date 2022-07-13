@@ -16,7 +16,6 @@ RSFrame class >> newLabel: string [
 RSFrame >> build [
 
 	| aux aux2 |
-	"col := RSGroup new."
 	aux := self extent.
 	aux2 := aux x / 2 @ (aux y / 2).
 	labelWidget ifNotNil: [ 
@@ -26,7 +25,7 @@ RSFrame >> build [
 			aux2 x negated @ (aux2 y + labelWidget extent y) negated ].
 	self addAll: (list collect: [ :element | 
 			 element
-				 position: 0@0;
+				 position: 0 @ 0;
 				 yourself ]).
 	self position: self position - RSSingletonData containerPosition.
 	self withBorder
@@ -41,7 +40,7 @@ RSFrame >> label [
 
 { #category : #accessing }
 RSFrame >> label: string [
-	"self halt."
+
 	self assert: string isString.
 	labelWidget := RSLabelWidget new text: string
 ]

@@ -21,11 +21,13 @@ RSBoxAdapter >> addConstraints: constraints toChild: childWidget [
 
 { #category : #adding }
 RSBoxAdapter >> addWidgetAlignment: constraints to: rsWidget [
-	"rsWidget direction: layout direction."
-	layout vAlign
-		ifNotNil: [ :align | self halt. rsWidget vAlign: align asGtkAlign ].
- 	layout hAlign 
-		ifNotNil: [ :align | self halt.rsWidget hAlign: align asGtkAlign ]
+
+	layout vAlign ifNotNil: [ :align | 
+		self halt.
+		rsWidget vAlign: align asGtkAlign ].
+	layout hAlign ifNotNil: [ :align | 
+		self halt.
+		rsWidget hAlign: align asGtkAlign ]
 ]
 
 { #category : #private }
@@ -33,11 +35,7 @@ RSBoxAdapter >> applyLayout: aLayout [
 
 	widget := self newInstance: RSBoxWidget.
 	widget direction: aLayout direction.
-	"self connectToEvents: aLayout. "
-
 	widget
-		homogeneous: aLayout isHomogeneous;
-		spacing: aLayout spacing;
 		borderWidth: aLayout borderWidth
 ]
 
@@ -46,7 +44,6 @@ RSBoxAdapter >> basicAdd: aPresenter constraints: constraints to: rsWidget [
 
 	| childWidget |
 	childWidget := aPresenter buildWithSelector: constraints spec.
-	"self addConstraints: constraints toChild: childWidget."
 	constraints isPlacedAtStart
 		ifTrue: [ 
 			rsWidget

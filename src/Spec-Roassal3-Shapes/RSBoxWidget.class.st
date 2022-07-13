@@ -17,24 +17,19 @@ RSBoxWidget >> addChild: rsWidget given: expand fill: fill padding: padding [
 { #category : #building }
 RSBoxWidget >> build [
 
-	"self translateBy: -10@20.""self position: (self extent x) negated@ (self extent y) negated."
-
 	self addAll:
-		(elements collect: [ :element | "element class == self class"
+		(elements collect: [ :element |
 			 (element isKindOf: RSContainer)
 				 ifTrue: [ 
-					 "self halt."
-					 "element totalPosition: self totalPosition."
-					 "element position: element position - self position"
 					 element translateBy:
 						 element extent / 2 - (self extent / 2) - self position ]
-				 ifFalse: [ "self halt." 
+				 ifFalse: [
 					 element position:
 						 element position - (self extent / 2) - self position ].
-			 element ]).
+			 element ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSBoxWidget >> defaultLineLayout [
 	^ RSHorizontalLineLayout new horizontalGap: 10; yourself
 ]
@@ -48,11 +43,6 @@ RSBoxWidget >> direction: specLayoutDirection [
 				ifTrue: [ lineLayout := RSHorizontalLineLayout new horizontalGap: 10; yourself ] ]
 ]
 
-{ #category : #private }
-RSBoxWidget >> homogeneous: integer [
-	
-]
-
 { #category : #initialization }
 RSBoxWidget >> initialize [ 
 	super initialize.
@@ -61,10 +51,6 @@ RSBoxWidget >> initialize [
 
 { #category : #accessing }
 RSBoxWidget >> packStart: child expand: expand fill: fill padding: padding [
-
-	"self keepWidget: child."
-
-	"child is the element to add in the layout, expand and fill are booleans. Padding is a number"
 
 	self
 		addChild: child

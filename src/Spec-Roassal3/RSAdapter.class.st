@@ -12,9 +12,11 @@ Class {
 
 { #category : #accessing }
 RSAdapter class >> adaptingName [
+
 	"Answers the name this component adapts."
 
-	"Remove the 'Roassal' part will almost always give us the adapter name"
+	"Remove the 'rs' part will almost always give us the adapter name"
+
 	^ (self name allButFirst: 2) asSymbol
 ]
 
@@ -49,19 +51,14 @@ RSAdapter class >> widgetData: object [
 { #category : #adding }
 RSAdapter >> addModelTo: rsWidget [
 
-	"self halt."
-
-	"customLocation := RSSingletonData hasReader"
+	
 ]
 
 { #category : #factory }
-RSAdapter >> buildWidget [ 
+RSAdapter >> buildWidget [
+
 	| roassalWidget |
-	
 	roassalWidget := self newWidget.
-	"self addSettingsTo: roassalWidget."
-	"self addKeyBindingsTo: gtkWidget.
-	self addEventsTo: gtkWidget."
 	self addModelTo: roassalWidget.
 	^ self wrapWidget: roassalWidget
 ]

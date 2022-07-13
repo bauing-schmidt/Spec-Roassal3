@@ -34,8 +34,7 @@ RSNodeMapping >> children [
 { #category : #accessing }
 RSNodeMapping >> children: anObject [
 
-	children := anObject.
-	"children do: [ :tree | tree node parent: self ]"
+	children := anObject
 ]
 
 { #category : #accessing }
@@ -43,11 +42,6 @@ RSNodeMapping >> childrenAt: index [
 	^ index <= children size 
 		ifTrue: [ children at: index ]
 		ifFalse: [ nil ]
-]
-
-{ #category : #'as yet unclassified' }
-RSNodeMapping >> childrenSize [
-	^ children size
 ]
 
 { #category : #accessing }

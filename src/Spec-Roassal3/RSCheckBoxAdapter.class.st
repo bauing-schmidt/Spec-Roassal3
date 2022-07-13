@@ -8,17 +8,11 @@ Class {
 RSCheckBoxAdapter >> addModelTo: rsWidget [
 
 	super addModelTo: rsWidget.
-	
-	rsWidget text: self getLabelText;
-	active: self presenter state;
-	build.
-	
-	"rsWidget connectToggled: [
-		self backendUpdatingDo: [ self updatePresenterState ] ].
-	self presenter whenChangedDo: [
-		self backendDetectCyclesDo: [ self updateState ] ].
-	
-	self presenter whenLabelChangedDo: [ self updateLabel ]"
+
+	rsWidget
+		text: self getLabelText;
+		active: self presenter state;
+		build
 ]
 
 { #category : #private }

@@ -10,21 +10,16 @@ Class {
 { #category : #adding }
 RSMiscAdapter >> addModelTo: rsWidget [
 
-	"| assoc |"
-
 	super addModelTo: rsWidget.
 	customLocation ifTrue: [ 
 		| tree node |
 		tree := RSSingletonData reader.
 		RSSingletonData reader: tree.
 		node := tree node.
-		"assoc := RSAdapter widgetData nextOrNil.
-		assoc ifNotNil: [ rsWidget translateBy: assoc key origin ]"
 		rsWidget
 			position: node allocation;
 			extent: node size;
-			info: node
-		"translateBy: node allocation;" ].
+			info: node ].
 	rsWidget customLocation: customLocation
 ]
 

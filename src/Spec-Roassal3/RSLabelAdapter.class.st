@@ -10,8 +10,6 @@ RSLabelAdapter >> addModelTo: roassalWidget [
 	super addModelTo: roassalWidget.
 	roassalWidget
 		text: self getText;
-		"self presenter whenLabelChangedDo: [
-		self innerWidgetDo: [ :w | w label: self getText ] ]."
 			build
 ]
 

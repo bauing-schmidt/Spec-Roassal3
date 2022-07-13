@@ -6,26 +6,21 @@ Class {
 
 { #category : #adding }
 RSFrameAdapter >> addModelTo: rsFrame [
+
 	super addModelTo: rsFrame.
-	rsFrame 
+	rsFrame
 		label: self presenter label;
 		addWidget: self presenterWidget;
-		build
-	"self presenter whenLabelChangedDo: [ 
-		rsFrame label: self presenter label ].
-	self presenter whenPresenterChangedDo: [ 
-		rsFrame 
-			removeAll;
-			add: self presenterWidget ]"
+			build
 ]
 
 { #category : #building }
 RSFrameAdapter >> presenterWidget [
 
-	^ self presenter presenter adapter 
-		ifNotNil: [ :anAdapter | anAdapter widget ]
-		ifNil: [ self presenter presenter build.
-			"self presenter presenter adapter widget" ]
+	^ self presenter presenter adapter
+		  ifNotNil: [ :anAdapter | anAdapter widget ]
+		  ifNil: [ 
+			  self presenter presenter build ]
 ]
 
 { #category : #building }

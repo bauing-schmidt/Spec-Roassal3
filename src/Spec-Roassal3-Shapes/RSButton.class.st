@@ -17,11 +17,9 @@ RSButton >> build [
 		(info path isNotNil and: [ 
 			 info path isNotEmpty and: [ info path asFileReference exists ] ]) 
 			ifTrue: [ group add: self getImage ] ].
-
-	"RSVerticalLineLayout on: group."
 	self
 		addAll: group;
-		"translateBy: self extent / 2;"border: (RSBorder new
+		border: (RSBorder new
 				 width: 0.5;
 				 color: Color black);
 		translateBy: self extent / 2

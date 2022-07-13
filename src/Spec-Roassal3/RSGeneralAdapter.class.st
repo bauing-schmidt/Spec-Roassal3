@@ -7,10 +7,6 @@ Class {
 { #category : #adding }
 RSGeneralAdapter >> addModelTo: rsWidget [
 
-	"| assoc |"
-
-	"	self halt."
-
 	super addModelTo: rsWidget.
 	customLocation
 		ifTrue: [ 
@@ -18,9 +14,6 @@ RSGeneralAdapter >> addModelTo: rsWidget [
 			tree := RSSingletonData reader.
 			RSSingletonData reader: tree.
 			node := tree node.
-			"assoc := RSAdapter widgetData nextOrNil.
-		assoc ifNotNil: [ rsWidget extent: assoc value.
-		rsWidget translateBy: assoc key origin ]"
 			rsWidget
 				extent: node size;
 				position: node allocation;

@@ -27,7 +27,7 @@ RSEntry >> build [
 		withBorder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSEntry >> getColor [
 
 	^ (text isNil or: [ text isEmpty ])
