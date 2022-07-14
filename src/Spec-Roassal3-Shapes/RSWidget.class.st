@@ -20,12 +20,6 @@ RSWidget >> build [
 	self subclassResponsibility  
 ]
 
-{ #category : #signaling }
-RSWidget >> connectDestroy: aBlock [
-
-	"(GDestroyCallback do: [ :widget :aData | aBlock value ]) connectTo: self"
-]
-
 { #category : #accessing }
 RSWidget >> customLocation [
 
