@@ -16,7 +16,7 @@ RSLabelWidget >> addOn: canvas [
 RSLabelWidget >> build [
 
 	self add: (RSLabel new
-			 color: Color black;
+			 color: (info ifNil: [ Color black ] ifNotNil: [ info fontColor ]);
 			 text: text).
 	self translateBy: self nodes first extent / 2
 ]

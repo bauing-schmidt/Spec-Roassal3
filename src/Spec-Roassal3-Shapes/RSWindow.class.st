@@ -15,7 +15,7 @@ RSWindow >> open [
 
 { #category : #opening }
 RSWindow >> openWithTitle: aTitleAsString [
-	"Open a canvas with a given title"
+
 	| window |
 	self createMorph.
 	window := morph openInWindowLabeled: aTitleAsString.

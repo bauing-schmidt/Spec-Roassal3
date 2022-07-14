@@ -3,14 +3,16 @@ Class {
 	#superclass : #RSComposite,
 	#instVars : [
 		'data',
-		'customLocation'
+		'customLocation',
+		'info'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget'
 }
 
 { #category : #adding }
 RSWidget >> addOn: canvas [
-	canvas addFixedShape: self
+
+	canvas add: self
 ]
 
 { #category : #building }
@@ -48,9 +50,9 @@ RSWidget >> data: anObject [
 	data := anObject
 ]
 
-{ #category : #geometry }
-RSWidget >> hExpand: boolean [
-	
+{ #category : #accessing }
+RSWidget >> info: aNode [
+	info := aNode
 ]
 
 { #category : #initialization }

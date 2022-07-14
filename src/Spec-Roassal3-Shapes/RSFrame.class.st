@@ -12,40 +12,23 @@ RSFrame class >> newLabel: string [
 	^ self new label: string
 ]
 
-{ #category : #adding }
-RSFrame >> addOn: canvas [
-	super addOn: canvas 
-]
-
 { #category : #building }
 RSFrame >> build [
-	| col aux aux2 |
-	col := RSGroup new.
+
+	| aux aux2 |
 	aux := self extent.
-	aux2 := (aux x/2) @ (aux y / 2).
+	aux2 := aux x / 2 @ (aux y / 2).
 	labelWidget ifNotNil: [ 
 		labelWidget build.
-		col add: labelWidget.
-		labelWidget translateBy: aux2 x negated @ (aux2 y + labelWidget extent y) negated ].
-	col addAll: list.
-	list ifNotEmpty: [ list first translateBy: aux2 negated ].
-	"col translateBy: self extent negated."
-	customLocation 
-		ifTrue: [ self addAll: col ]
-		ifFalse: [ 
-			RSVerticalLineLayout on: col.
-			self shapes: col ].
-	"self adjustToChildren."
-	self withBorder.
-	self translateBy: aux2.
-	"self padding: 1."
-	
-	"self translateTo: 0@0."
-	"self translateBy: self extent/8;"
-		"extent: 100@50;"
-		"adjustToChildren;"
-	
-		
+		self add: labelWidget.
+		labelWidget translateBy:
+			aux2 x negated @ (aux2 y + labelWidget extent y) negated ].
+	self addAll: (list collect: [ :element | 
+			 element
+				 position: 0 @ 0;
+				 yourself ]).
+	self position: self position - RSSingletonData containerPosition.
+	self withBorder
 ]
 
 { #category : #accessing }

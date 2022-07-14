@@ -6,7 +6,9 @@ Class {
 		'children',
 		'size',
 		'className',
-		'allocation'
+		'allocation',
+		'path',
+		'fontColor'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
@@ -32,8 +34,7 @@ RSNodeMapping >> children [
 { #category : #accessing }
 RSNodeMapping >> children: anObject [
 
-	children := anObject.
-	"children do: [ :tree | tree node parent: self ]"
+	children := anObject
 ]
 
 { #category : #accessing }
@@ -41,11 +42,6 @@ RSNodeMapping >> childrenAt: index [
 	^ index <= children size 
 		ifTrue: [ children at: index ]
 		ifFalse: [ nil ]
-]
-
-{ #category : #'as yet unclassified' }
-RSNodeMapping >> childrenSize [
-	^ children size
 ]
 
 { #category : #accessing }
@@ -70,6 +66,17 @@ RSNodeMapping >> color: aColor [
 	color := aColor
 ]
 
+{ #category : #accessing }
+RSNodeMapping >> fontColor [
+
+	^ fontColor
+]
+
+{ #category : #accessing }
+RSNodeMapping >> fontColor: aColor [ 
+	fontColor := aColor
+]
+
 { #category : #initialization }
 RSNodeMapping >> initialize [ 
 	children := OrderedCollection new
@@ -81,6 +88,16 @@ RSNodeMapping >> next [
 		detect: [ :child | child read not ]
 		ifFound: [ :child | child next ]
 		ifNone: [ nil ]
+]
+
+{ #category : #accessing }
+RSNodeMapping >> path [ 
+	^path
+]
+
+{ #category : #accessing }
+RSNodeMapping >> path: pathImage [ 
+	path := pathImage
 ]
 
 { #category : #accessing }

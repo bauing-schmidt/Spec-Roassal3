@@ -9,28 +9,35 @@ Class {
 
 { #category : #building }
 RSButton >> build [
-	self 
-	add: self label;
-	"extent: self extent;"
-	translateBy: self extent / 2;
-	border: (RSBorder new width: 0.5; color: Color black)";
-	@ (RSHighlightable color: self defaultColor darker)"
+
+	| group |
+	group := RSGroup new.
+	group add: self label.
+	info ifNotNil: [ 
+		(info path isNotNil and: [ 
+			 info path isNotEmpty and: [ info path asFileReference exists ] ]) 
+			ifTrue: [ group add: self getImage ] ].
+	self
+		addAll: group;
+		border: (RSBorder new
+				 width: 0.5;
+				 color: Color black);
+		translateBy: self extent / 2
 ]
 
-{ #category : #initialization }
-RSButton >> defaultColor [
-	^ Color gray
-]
+{ #category : #adding }
+RSButton >> getImage [
 
-{ #category : #'as yet unclassified' }
-RSButton >> defaultColorLabel [
+	^ RSImage new path: info path; build
 
-	^ Color black
 ]
 
 { #category : #adding }
 RSButton >> label [
-	^ RSLabel new color: self defaultColorLabel; text: text
+
+	^ RSLabel new
+		  color: (info ifNil: [ Color black ] ifNotNil: [ info fontColor ]);
+		  text: text
 ]
 
 { #category : #geometry }

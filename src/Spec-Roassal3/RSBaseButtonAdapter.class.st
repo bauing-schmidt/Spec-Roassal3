@@ -8,20 +8,14 @@ Class {
 RSBaseButtonAdapter >> addModelTo: roassalButton [
 
 	super addModelTo: roassalButton.
-
 	widget := roassalButton.
-
-	self presenter label isEmptyOrNil ifFalse: [ self updateLabel ].
-	self presenter icon ifNotNil: [ self updateIcon ].
-	
-	"model whenLabelChangedDo: [ self updateLabel ].
-	model whenIconChangedDo: [ self updateIcon ]"
+	self presenter label isEmptyOrNil ifFalse: [ self updateLabel ]
 ]
 
 { #category : #private }
 RSBaseButtonAdapter >> getLabelText [
 
-	^ self presenter label "ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]"
+	^ self presenter label
 ]
 
 { #category : #updating }
