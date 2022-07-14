@@ -6,17 +6,22 @@ Class {
 
 { #category : #baselines }
 BaselineOfSpecRoassal3 >> baseline: spec [
+
 	<baseline>
 	spec for: #common do: [ 
-		spec baseline: 'SpecGtk' 
+		spec
+			baseline: 'SpecGtk'
 			with: [ spec repository: 'github://pharo-spec/Spec-Gtk' ].
-		spec baseline: 'Roassal3' 
+		spec
+			baseline: 'Roassal3'
 			with: [ spec repository: 'github://ObjectProfile/Roassal3' ].
-		spec baseline: 'NeoJSON' 
+		spec
+			baseline: 'NeoJSON'
 			with: [ spec repository: 'github://svenvc/NeoJSON/repository' ].
-		spec 
+		spec
 			package: 'Spec-Roassal3-Shapes' with: [ spec requires: #( 'Roassal3' ) ];
-			package: 'Spec-Roassal3' with: [ spec requires: #( 'SpecGtk' 'Spec-Roassal3-Shapes' 'NeoJSON' ) ];
-			package: 'Spec-Roassal3-Examples' with: [ spec requires: #( 'SpecGtk' ) ]
-	]
+			package: 'Spec-Roassal3'
+			with: [ spec requires: #( 'SpecGtk' 'Spec-Roassal3-Shapes' 'NeoJSON' ) ];
+			package: 'Spec-Roassal3-Examples'
+			with: [ spec requires: #( 'SpecGtk' ) ] ]
 ]

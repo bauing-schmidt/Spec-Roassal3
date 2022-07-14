@@ -109,6 +109,29 @@ RSSerializerVisitor >> visitInfoArea: widget [
 ]
 
 { #category : #visiting }
+RSSerializerVisitor >> visitTreeView: widget [
+	| dict |
+	dict := self defaultDataToSerialize.
+	dict at: widget class put: [ :mapping | 
+						(mapping mapAccessors: #(#className #allocation #size #children #columns #styleContext)) ].
+	widget children do: [:child | child accept: self. 
+		dict addAll: mappingDictionary ].
+	widget columns do: [:child | child accept: self. 
+		dict addAll: mappingDictionary ].
+	mappingDictionary := dict
+]
+
+{ #category : #visiting }
+RSSerializerVisitor >> visitTreeViewColumn: widget [
+	| dict |
+	dict := self defaultDataToSerialize.
+	dict 
+		at: widget class put: [ :mapping | 
+						(mapping mapAccessors: #(#className #id #width)). ].
+	mappingDictionary := dict
+]
+
+{ #category : #visiting }
 RSSerializerVisitor >> visitWidget: widget [
 
 	| dict |

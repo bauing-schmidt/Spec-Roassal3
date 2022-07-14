@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'orientation'
 	],
-	#category : #'Spec-Roassal3-Shapes-Widget-Input'
+	#category : #'RSShapes-Widget-Input'
 }
 
 { #category : #'instance creation' }
@@ -16,7 +16,11 @@ RSSlider class >> newHorizontalMin: min max: max step: step [
 { #category : #'instance creation' }
 RSSlider class >> newOrientation: orientation min: min max: max step: step [
 
-	^ self new orientation: orientation
+	^ self new
+		orientation: orientation";
+		min: min;
+		max: max;
+		step: step"
 ]
 
 { #category : #'instance creation' }
@@ -27,10 +31,7 @@ RSSlider class >> newVerticalMin: min max: max step: step [
 
 { #category : #'accessing - token' }
 RSSlider >> bar [
-
-	^ RSBox new
-		  color: Color black;
-		  extent: self extent x @ 4
+	^ RSBox new color: self color; extent: self extent x@4
 ]
 
 { #category : #building }
@@ -40,15 +41,13 @@ RSSlider >> build [
 	ellipse := self ellipse.
 	shapes add: ellipse.
 	bar := self bar.
-	bar translateBy: bar extent x / 2 @ ellipse radius.
+	self color: Color white.
+	bar translateBy: ((bar extent x / 2)@(ellipse radius)).
 	self add: bar.
 	orientation ifNil: [ orientation := self defaultOrientation ].
-	orientation
-		gapSize: 0;
-		on: shapes.
-	self addAll: shapes.
-	shapes translateBy: 0 @ (self extent y / 2 - (shapes extent y / 2)).
-	bar translateBy: 0 @ (self extent y / 2 - (shapes extent y / 2))
+	orientation gapSize: 0;
+	on: shapes.
+	self addAll: shapes.  
 ]
 
 { #category : #accessing }
@@ -57,9 +56,8 @@ RSSlider >> defaultOrientation [
 ]
 
 { #category : #shapes }
-RSSlider >> ellipse [
-
-	^ RSEllipse new radius: self extent y / 4
+RSSlider >> ellipse [ 
+	^ RSEllipse new color: self color; radius: self extent y / 4
 ]
 
 { #category : #accessing }

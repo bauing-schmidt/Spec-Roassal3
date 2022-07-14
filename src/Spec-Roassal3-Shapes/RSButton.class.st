@@ -29,6 +29,7 @@ RSButton >> build [
 RSButton >> getImage [
 
 	^ RSImage new path: info path; build
+
 ]
 
 { #category : #adding }

@@ -76,6 +76,13 @@ RSAdapter >> initialize [
 	customLocation := RSSingletonData hasReader
 ]
 
+{ #category : #enumerating }
+RSAdapter >> innerWidgetDo: aBlock [
+
+	self hasWidget ifFalse: [ ^ nil ].
+	^ aBlock value: widget
+]
+
 { #category : #'instance creation' }
 RSAdapter >> newWidget [
 

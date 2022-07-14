@@ -1,0 +1,5 @@
+Class {
+	#name : #RSTreeDataIntegerColumn,
+	#superclass : #RSTreeDataColumn,
+	#category : #'Spec-Roassal3-Shapes-Widget-Tree-Store'
+}

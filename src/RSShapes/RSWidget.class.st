@@ -3,21 +3,25 @@ Class {
 	#superclass : #RSComposite,
 	#instVars : [
 		'data',
-		'customLocation',
-		'info'
+		'customLocation'
 	],
-	#category : #'Spec-Roassal3-Shapes-Widget'
+	#category : #'RSShapes-Widget'
 }
 
 { #category : #adding }
 RSWidget >> addOn: canvas [
-
-	canvas add: self
+	canvas addFixedShape: self
 ]
 
 { #category : #building }
 RSWidget >> build [
 	self subclassResponsibility  
+]
+
+{ #category : #signaling }
+RSWidget >> connectDestroy: aBlock [
+
+	"(GDestroyCallback do: [ :widget :aData | aBlock value ]) connectTo: self"
 ]
 
 { #category : #accessing }
@@ -44,9 +48,9 @@ RSWidget >> data: anObject [
 	data := anObject
 ]
 
-{ #category : #accessing }
-RSWidget >> info: aNode [
-	info := aNode
+{ #category : #geometry }
+RSWidget >> hExpand: boolean [
+	
 ]
 
 { #category : #initialization }
