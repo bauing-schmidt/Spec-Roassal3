@@ -2,13 +2,9 @@ Class {
 	#name : #RSTreeDataStore,
 	#superclass : #Object,
 	#instVars : [
-		'sortedRoots',
 		'roots',
-		'wrappedRoots',
 		'childrenBlock',
-		'dragEnabled',
-		'columns',
-		'pointer'
+		'columns'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget-Tree-Store'
 }
@@ -17,14 +13,7 @@ Class {
 RSTreeDataStore >> addColumn: aColumn [
 
 	aColumn store: self.
-	pointer add: aColumn
-]
-
-{ #category : #adding }
-RSTreeDataStore >> addCompositeColumn: object [
-
-	pointer := object children.
-	columns add: object
+	columns add: aColumn
 ]
 
 { #category : #accessing }
@@ -53,12 +42,6 @@ RSTreeDataStore >> columnSuchAs: aBlock [
 	^ columns detect: [ :each | aBlock value: each ]
 	ifFound: [ :each | each ]
 	ifNone: [ nil ]
-]
-
-{ #category : #accessing }
-RSTreeDataStore >> dragEnabled: aBoolean [
-
-	dragEnabled := aBoolean
 ]
 
 { #category : #accessing }
@@ -93,19 +76,7 @@ RSTreeDataStore >> indexOfColumnSuchAs: aBlock [
 RSTreeDataStore >> initialize [
 
 	super initialize.
-	columns := OrderedCollection new.
-	pointer := columns
-]
-
-{ #category : #accessing }
-RSTreeDataStore >> resetWrappedRoots [
-
-	wrappedRoots := nil
-]
-
-{ #category : #'as yet unclassified' }
-RSTreeDataStore >> restartPointer [ 
-	pointer := columns
+	columns := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -116,7 +87,5 @@ RSTreeDataStore >> roots [
 { #category : #accessing }
 RSTreeDataStore >> roots: aCollection [
 
-	sortedRoots := nil.
-	roots := aCollection.
-	self resetWrappedRoots
+	roots := aCollection
 ]

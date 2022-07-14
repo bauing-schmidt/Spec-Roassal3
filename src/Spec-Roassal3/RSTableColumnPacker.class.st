@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'column',
 		'builder',
-		'expand',
 		'listItems',
 		'currentRoot',
 		'level',
@@ -20,6 +19,25 @@ RSTableColumnPacker >> addRendererPropertiesTo: renderer column: aTableColumn [
 		renderer width: w ].
 ]
 
+{ #category : #'as yet unclassified' }
+RSTableColumnPacker >> buildCell [
+
+	^ RSTreeViewColumn new
+		  image:
+			  (listItems
+				   at: 'image'
+				   ifAbsent: [ nil ]);
+		  title: (listItems at: 'title' ifAbsent: [ '' ]);
+		  leafLevel: level;
+		  build
+]
+
+{ #category : #'as yet unclassified' }
+RSTableColumnPacker >> buildColumn [
+
+	^ bodyColumn build
+]
+
 { #category : #accessing }
 RSTableColumnPacker >> builder [
 
@@ -30,12 +48,6 @@ RSTableColumnPacker >> builder [
 RSTableColumnPacker >> builder: anObject [
 
 	builder := anObject
-]
-
-{ #category : #'as yet unclassified' }
-RSTableColumnPacker >> builderShape [
-
-	^ bodyColumn build
 ]
 
 { #category : #accessing }
@@ -51,40 +63,9 @@ RSTableColumnPacker >> column: anObject [
 ]
 
 { #category : #accessing }
-RSTableColumnPacker >> columnIndexOf: aTableColumn [
-
-	^ (self store indexOf: aTableColumn) - 1
-]
-
-{ #category : #accessing }
-RSTableColumnPacker >> columnIndexOf: aTableColumn tag: anObject [
-
-	^ (self store indexOf: aTableColumn tag: anObject) - 1
-]
-
-{ #category : #accessing }
 RSTableColumnPacker >> columnOfStore: aTableColumn [
 
 	^ self store column: aTableColumn
-]
-
-{ #category : #'as yet unclassified' }
-RSTableColumnPacker >> columnShape [
-
-	^ RSTreeViewColumn new
-		  image:
-			  (listItems
-				   at: 'image'
-				   ifAbsent: [ nil ]);
-		  title: (listItems at: 'title' ifAbsent: [ '' ]);
-		  leafLevel: level;
-		  build
-]
-
-{ #category : #accessing }
-RSTableColumnPacker >> expand: anObject [
-
-	expand := anObject
 ]
 
 { #category : #initialization }
@@ -93,23 +74,6 @@ RSTableColumnPacker >> initialize [
 	super initialize.
 	listItems := Dictionary new.
 	bodyColumn := RSBodyColumn new
-]
-
-{ #category : #accessing }
-RSTableColumnPacker >> isExpand [
-
-	^ expand
-]
-
-{ #category : #visiting }
-RSTableColumnPacker >> newImageRenderer [
-	^ RSCellRendererPixBuf new
-]
-
-{ #category : #'instance creation' }
-RSTableColumnPacker >> newTextRenderer [
-
-	^ RSCellRendererText new
 ]
 
 { #category : #accessing }
@@ -133,7 +97,7 @@ RSTableColumnPacker >> visit: aTableColumn givenRoots: roots and: integer [
 		currentRoot := root.
 		level := integer.
 		self visit: aTableColumn.
-		bodyColumn addRow: self columnShape.
+		bodyColumn addRow: self buildCell.
 		listItems := Dictionary new.
 		childrenBlock ifNotNil: [ 
 			self

@@ -42,8 +42,8 @@ RSTreeDataColumn >> evaluated: object [
 ]
 
 { #category : #private }
-RSTreeDataColumn >> readObject: anObject [ 
-	self halt.
+RSTreeDataColumn >> readObject: anObject [
+
 	^ evaluation cull: anObject
 ]
 

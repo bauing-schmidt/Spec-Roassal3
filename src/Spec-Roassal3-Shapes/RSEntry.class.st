@@ -16,16 +16,15 @@ RSEntry >> bePassword [
 
 { #category : #building }
 RSEntry >> build [
-	"self add: (self input translateBy: self extent/2)"
-	self 
-	add: self label;
-	color: Color white;
-	"extent: self extent;"
-	translateBy: self extent / 2;
-	withBorder
+
+	self
+		add: self label;
+		color: Color white;
+		translateBy: self extent / 2;
+		withBorder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSEntry >> getColor [
 	^ (text isNil or: [ text isEmpty ])
 		ifTrue: [ 
@@ -63,10 +62,10 @@ RSEntry >> input [
 
 { #category : #accessing }
 RSEntry >> label [
-	^ RSLabel new 
-		color: self getColor; 
-		text: self getText";
-		translateBy: 0@0"
+
+	^ RSLabel new
+		  color: self getColor;
+		  text: self getText
 ]
 
 { #category : #accessing }

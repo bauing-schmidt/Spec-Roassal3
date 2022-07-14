@@ -4,31 +4,12 @@ Class {
 	#instVars : [
 		'title',
 		'minWidth',
-		'resizable',
-		'renderers',
 		'width',
-		'sizing',
 		'image',
 		'leafLevel'
 	],
 	#category : #'Spec-Roassal3-Shapes-Widget-Tree'
 }
-
-{ #category : #adding }
-RSTreeViewColumn >> addAttribute: attribute column: column renderer: aRenderer [
-	"analyze if put the attribute on renderer or this class"
-]
-
-{ #category : #api }
-RSTreeViewColumn >> beResizable [
-
-	self resizable: true
-]
-
-{ #category : #initialization }
-RSTreeViewColumn >> beSizingFixed [
-	self sizing: 2
-]
 
 { #category : #building }
 RSTreeViewColumn >> build [
@@ -41,9 +22,7 @@ RSTreeViewColumn >> build [
 	cellImage ifNotNil: [ group add: cellImage ].
 	group add: label.
 	RSHorizontalLineLayout on: group.
-	self shapes: group.
-	"translateBy: self extent / 2;"
-	"self withBorder"
+	self shapes: group
 ]
 
 { #category : #accessing }
@@ -57,7 +36,7 @@ RSTreeViewColumn >> image: imageCell [
 	image := imageCell
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RSTreeViewColumn >> imageToDraw [
 
 	^ image ifNotNil: [  
@@ -71,8 +50,6 @@ RSTreeViewColumn >> imageToDraw [
 RSTreeViewColumn >> initialize [
 
 	super initialize.
-	self beSizingFixed.
-	renderers := OrderedCollection new.
 	title := ''
 ]
 
@@ -98,25 +75,6 @@ RSTreeViewColumn >> minWidth [
 RSTreeViewColumn >> minWidth: anObject [
 
 	minWidth := anObject
-]
-
-{ #category : #private }
-RSTreeViewColumn >> packStart: aRenderer expand: aBoolean [
-	renderers add: aRenderer.
-	aRenderer expand: aBoolean
-	"self 
-		gtkTreeViewColumnPackStart: aRenderer 
-		expand: aBoolean"
-]
-
-{ #category : #accessing }
-RSTreeViewColumn >> resizable: boolean [
-	resizable := boolean
-]
-
-{ #category : #initialization }
-RSTreeViewColumn >> sizing: type [
-	sizing := type
 ]
 
 { #category : #accessing }

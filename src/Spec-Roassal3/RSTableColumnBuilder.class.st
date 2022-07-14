@@ -46,7 +46,6 @@ RSTableColumnBuilder >> newColumnFor: aTableColumn [
 	column := RSTreeViewColumn new.
 	column title: aTableColumn title.
 	aTableColumn width ifNotNil: [ :w | column minWidth: w ].
-	self isResizable ifTrue: [ column beResizable ].
 
 	^ column build
 ]
@@ -86,7 +85,7 @@ RSTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 	column := self newColumnFor: aTableColumn.
 	packer := self newColumnPackerFor: column.
 	packer visitIteratively: aTableColumn.
-	body := packer builderShape.
+	body := packer buildColumn.
 	self addToView: column and: body
 ]
 
@@ -103,6 +102,6 @@ RSTableColumnBuilder >> visitStringColumn: aTableColumn [
 	column := self newColumnFor: aTableColumn.
 	packer := self newColumnPackerFor: column.
 	packer visitIteratively: aTableColumn.
-	bodyColumn := packer builderShape.
+	bodyColumn := packer buildColumn.
 	self addToView: column and: bodyColumn
 ]
