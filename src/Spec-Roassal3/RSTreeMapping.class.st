@@ -31,8 +31,18 @@ RSTreeMapping >> className: string [
 ]
 
 { #category : #accessing }
+RSTreeMapping >> columns: collection [
+	node columns: collection 
+]
+
+{ #category : #accessing }
 RSTreeMapping >> getImage: dict [
 	self image: (dict at: 'url')
+]
+
+{ #category : #accessing }
+RSTreeMapping >> id: symbol [
+	node id: symbol
 ]
 
 { #category : #accessing }
@@ -102,4 +112,10 @@ RSTreeMapping >> size: point [
 RSTreeMapping >> styleContext: aDictionary [
 	node color: (aDictionary at: 'backgroundColor').
 	node fontColor: (aDictionary at: 'fontColor').
+]
+
+{ #category : #accessing }
+RSTreeMapping >> width: number [
+
+	node width: number
 ]

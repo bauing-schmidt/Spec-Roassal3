@@ -6,8 +6,8 @@ Class {
 		'builder',
 		'listItems',
 		'currentRoot',
-		'level',
-		'bodyColumn'
+		'bodyColumn',
+		'indexColumn'
 	],
 	#category : #'Spec-Roassal3-Adapter-Table'
 }
@@ -20,15 +20,15 @@ RSTableColumnPacker >> addRendererPropertiesTo: renderer column: aTableColumn [
 ]
 
 { #category : #'as yet unclassified' }
-RSTableColumnPacker >> buildCell [
+RSTableColumnPacker >> buildCell: integer givenWidth: number info: node [
 
-	^ RSTreeViewColumn new
-		  image:
-			  (listItems
-				   at: 'image'
-				   ifAbsent: [ nil ]);
+	^ RSTreeViewCell new
+		  image: (listItems at: 'image' ifAbsent: [ nil ]);
 		  title: (listItems at: 'title' ifAbsent: [ '' ]);
-		  leafLevel: level;
+		  leafLevel: integer;
+		  indexColumn: indexColumn;
+		  widthCell: number;
+		  info: node;
 		  build
 ]
 
@@ -73,7 +73,8 @@ RSTableColumnPacker >> initialize [
 
 	super initialize.
 	listItems := Dictionary new.
-	bodyColumn := RSBodyColumn new
+	bodyColumn := RSBodyColumn new.
+	indexColumn := 1
 ]
 
 { #category : #accessing }
@@ -89,27 +90,30 @@ RSTableColumnPacker >> visit: aTableColumn [
 ]
 
 { #category : #visiting }
-RSTableColumnPacker >> visit: aTableColumn givenRoots: roots and: integer [
+RSTableColumnPacker >> visit: aTableColumn givenRoots: roots width: number info: node and: integer [
 
 	| childrenBlock |
 	childrenBlock := self store childrenBlock.
 	roots do: [ :root | 
 		currentRoot := root.
-		level := integer.
 		self visit: aTableColumn.
-		bodyColumn addRow: self buildCell.
+		bodyColumn addRow:
+			(self buildCell: integer givenWidth: number info: node).
 		listItems := Dictionary new.
 		childrenBlock ifNotNil: [ 
 			self
 				visit: aTableColumn
 				givenRoots: (childrenBlock value: root)
+				width: number
+				info: node
 				and: integer + 1 ] ]
 ]
 
 { #category : #visiting }
 RSTableColumnPacker >> visitCompositeColumn: aTableColumn [
 
-	aTableColumn columns do: [ :each |
+	aTableColumn columns doWithIndex: [ :each :index | 
+		indexColumn := index.
 		self visit: each ]
 ]
 
@@ -126,9 +130,14 @@ RSTableColumnPacker >> visitImageColumn: aTableColumn [
 ]
 
 { #category : #visiting }
-RSTableColumnPacker >> visitIteratively: aTableColumn [
+RSTableColumnPacker >> visitIteratively: aTableColumn given: integer info: node [
 
-	self visit: aTableColumn givenRoots: self store roots and: 1
+	self
+		visit: aTableColumn
+		givenRoots: self store roots
+		width: integer
+		info: node
+		and: 1
 ]
 
 { #category : #visiting }

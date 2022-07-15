@@ -123,11 +123,11 @@ RSSerializerVisitor >> visitTreeView: widget [
 
 { #category : #visiting }
 RSSerializerVisitor >> visitTreeViewColumn: widget [
+
 	| dict |
 	dict := self defaultDataToSerialize.
-	dict 
-		at: widget class put: [ :mapping | 
-						(mapping mapAccessors: #(#className #id #width)). ].
+	dict at: widget class put: [ :mapping | 
+		mapping mapAccessors: #( #className #id #width ) ].
 	mappingDictionary := dict
 ]
 

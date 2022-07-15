@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'model',
 		'view',
-		'resizable'
+		'resizable',
+		'width',
+		'info'
 	],
 	#category : #'Spec-Roassal3-Adapter-Table'
 }
@@ -19,6 +21,12 @@ RSTableColumnBuilder >> addToView: column and: body [
 		body: body;
 		build.
 	self view appendColumn: columnShape
+]
+
+{ #category : #accessing }
+RSTableColumnBuilder >> info: node [
+
+	info := node
 ]
 
 { #category : #testing }
@@ -43,10 +51,11 @@ RSTableColumnBuilder >> model: anObject [
 RSTableColumnBuilder >> newColumnFor: aTableColumn [
 
 	| column |
-	column := RSTreeViewColumn new.
-	column title: aTableColumn title.
-	aTableColumn width ifNotNil: [ :w | column minWidth: w ].
-
+	column := RSTreeViewCell new.
+	column
+		title: aTableColumn title;
+		widthCell: width;
+		info: info.
 	^ column build
 ]
 
@@ -84,7 +93,10 @@ RSTableColumnBuilder >> visitCompositeColumn: aTableColumn [
 	| column packer body |
 	column := self newColumnFor: aTableColumn.
 	packer := self newColumnPackerFor: column.
-	packer visitIteratively: aTableColumn.
+	packer
+		visitIteratively: aTableColumn
+		given: width
+		info: info.
 	body := packer buildColumn.
 	self addToView: column and: body
 ]
@@ -101,7 +113,15 @@ RSTableColumnBuilder >> visitStringColumn: aTableColumn [
 	| column bodyColumn packer |
 	column := self newColumnFor: aTableColumn.
 	packer := self newColumnPackerFor: column.
-	packer visitIteratively: aTableColumn.
+	packer
+		visitIteratively: aTableColumn
+		given: width
+		info: info.
 	bodyColumn := packer buildColumn.
 	self addToView: column and: bodyColumn
+]
+
+{ #category : #accessing }
+RSTableColumnBuilder >> width: integer [
+	width := integer
 ]

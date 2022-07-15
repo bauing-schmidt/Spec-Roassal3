@@ -17,9 +17,7 @@ RSBodyColumn >> addRow: shape [
 RSBodyColumn >> build [
 
 	RSVerticalLineLayout on: shapes.
-
-	^ self
-		  shapes: shapes
+	^ self shapes: shapes
 ]
 
 { #category : #building }

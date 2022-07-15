@@ -43,11 +43,6 @@ RSCheckButton >> checkbox [
 	
 ]
 
-{ #category : #accessing }
-RSCheckButton >> defaultColorLabel [ 
-	^ Color black
-]
-
 { #category : #initialization }
 RSCheckButton >> initialize [ 
 	super initialize.
