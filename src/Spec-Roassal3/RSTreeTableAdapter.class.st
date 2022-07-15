@@ -12,7 +12,6 @@ Class {
 RSTreeTableAdapter >> addModelTo: rsTreeView [
 
 	super addModelTo: rsTreeView.
-
 	customLocation
 		ifTrue: [ 
 			| tree node |
@@ -21,11 +20,11 @@ RSTreeTableAdapter >> addModelTo: rsTreeView [
 			node := tree node.
 			rsTreeView
 				extent: node size;
-				translateBy: node allocation;
-				color: node color ]
+				position: node allocation;
+				color: node color;
+				info: node ]
 		ifFalse: [ rsTreeView extent: rsTreeView preferredSizeMinimum ].
 	rsTreeView customLocation: customLocation.
-	rsTreeView connectDestroy: [ rsTreeView model roots: #(  ) ].
 	self recreateStore: rsTreeView generateColumns: true.
 	rsTreeView build
 ]
@@ -46,11 +45,18 @@ RSTreeTableAdapter >> defaultColumn [
 { #category : #building }
 RSTreeTableAdapter >> doRecreateColumns: rsTreeView [
 
-	| columnBuilder |
+	| columnBuilder tree node |
 	rsTreeView removeAllColumns.
 	columnBuilder := self newColumnBuilder.
 	columnBuilder view: rsTreeView.
-	self columns do: [ :each | columnBuilder visit: each ]
+	tree := RSSingletonData reader.
+	RSSingletonData reader: tree.
+	node := tree node.
+	rsTreeView info: node.
+	self columns doWithIndex: [ :each :index | 
+		columnBuilder width: (node columns at: index) node width.
+		columnBuilder info: node.
+		columnBuilder visit: each ]
 ]
 
 { #category : #building }

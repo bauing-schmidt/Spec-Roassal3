@@ -18,11 +18,13 @@ RSTreeView >> build [
 	| group |
 	group := RSGroup new.
 	group addAll: columns.
+	self color: info color.
 	RSHorizontalLineLayout new
 		on: group;
 		gapSize: 5.
 	self
 		shapes: group;
+		position: self extent / 2 - self position + (0 @ 17);
 		withBorder
 ]
 

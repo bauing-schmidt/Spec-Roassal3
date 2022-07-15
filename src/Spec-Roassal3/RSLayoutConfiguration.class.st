@@ -13,8 +13,8 @@ RSLayoutConfiguration >> deserialize [
 
 	^ (NeoJSONReader on: pathFile asFileReference readStream)
 		  mapInstVarsFor: Point;
-		  for: Rectangle do: [ :mapping | 
-			  (mapping mapInstVar: #origin) valueSchema: Point ];
+		  for: Rectangle
+		  do: [ :mapping | (mapping mapInstVar: #origin) valueSchema: Point ];
 		  for: #Children customDo: [ :mapping | 
 			  mapping
 				  listOfType: OrderedCollection
@@ -42,12 +42,14 @@ RSLayoutConfiguration >> deserialize [
 		  customDo: [ :mapping | 
 			  mapping decoder: [ :dict | dict at: #image ] ];
 		  for: RSTreeMapping do: [ :mapping | 
+			  mapping mapAccessors: #(#id #width).
 			  (mapping mapAccessor: #allocation) valueSchema: Rectangle.
 			  (mapping mapAccessor: #size) valueSchema: Point.
 			  (mapping mapAccessor: #styleContext) valueSchema: #StyleContext.
 			  (mapping mapAccessor: #image) valueSchema: #Image.
 			  (mapping mapAccessor: #getImage) valueSchema: #GetImage.
-			  (mapping mapAccessor: #children) valueSchema: #Children ];
+			  (mapping mapAccessor: #children) valueSchema: #Children.
+			  (mapping mapAccessor: #columns) valueSchema: #Children ];
 		  nextAs: RSTreeMapping
 ]
 

@@ -17,13 +17,12 @@ RSBoxWidget >> addChild: rsWidget given: expand fill: fill padding: padding [
 { #category : #building }
 RSBoxWidget >> build [
 
-	self addAll:
-		(elements collect: [ :element |
+	self addAll: (elements collect: [ :element | 
 			 (element isKindOf: RSContainer)
 				 ifTrue: [ 
 					 element translateBy:
 						 element extent / 2 - (self extent / 2) - self position ]
-				 ifFalse: [
+				 ifFalse: [ 
 					 element position:
 						 element position - (self extent / 2) - self position ].
 			 element ])

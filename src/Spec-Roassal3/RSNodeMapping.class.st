@@ -8,7 +8,10 @@ Class {
 		'className',
 		'allocation',
 		'path',
-		'fontColor'
+		'fontColor',
+		'width',
+		'columns',
+		'id'
 	],
 	#category : #'Spec-Roassal3-Base'
 }
@@ -67,6 +70,18 @@ RSNodeMapping >> color: aColor [
 ]
 
 { #category : #accessing }
+RSNodeMapping >> columns [
+
+	^ columns
+]
+
+{ #category : #accessing }
+RSNodeMapping >> columns: anObject [
+
+	columns := anObject
+]
+
+{ #category : #accessing }
 RSNodeMapping >> fontColor [
 
 	^ fontColor
@@ -75,6 +90,11 @@ RSNodeMapping >> fontColor [
 { #category : #accessing }
 RSNodeMapping >> fontColor: aColor [ 
 	fontColor := aColor
+]
+
+{ #category : #accessing }
+RSNodeMapping >> id: symbol [
+	id := symbol
 ]
 
 { #category : #initialization }
@@ -109,4 +129,16 @@ RSNodeMapping >> size [
 RSNodeMapping >> size: anObject [
 
 	size := anObject
+]
+
+{ #category : #accessing }
+RSNodeMapping >> width [
+
+	^ width
+]
+
+{ #category : #accessing }
+RSNodeMapping >> width: anObject [
+
+	width := anObject
 ]
