@@ -15,17 +15,18 @@ RSTreeView >> appendColumn: column [
 { #category : #building }
 RSTreeView >> build [
 
-	| group |
+	| group prevPosition |
 	group := RSGroup new.
 	group addAll: columns.
 	self color: info color.
 	RSHorizontalLineLayout new
 		on: group;
-		gapSize: 5.
+		gapSize: 0.
+	prevPosition := self position.
 	self
 		shapes: group;
-		position: self extent / 2 - self position + (0 @ 17);
-		withBorder
+		withBorder.
+	self position: prevPosition - RSSingletonData containerPosition + (0 @ 20)
 ]
 
 { #category : #initialization }
