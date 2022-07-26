@@ -21,7 +21,7 @@ BaselineOfSpecRoassal3WithoutDependencies >> baseline: spec [
 		spec
 			package: 'Spec-Roassal3-Shapes' with: [ spec requires: #( 'Roassal3' ) ];
 			package: 'Spec-Roassal3'
-			with: [ spec requires: #( 'SpecGtk' 'Spec-Roassal3-Shapes' 'NeoJSON' ) ];
+			with: [ spec requires: #( 'Spec-Roassal3-Shapes' ) ];
 			package: 'Spec-Roassal3-Examples'
-			with: [ spec requires: #( 'SpecGtk' ) ] ]
+			with: [ spec requires: #( ) ] ]
 ]
